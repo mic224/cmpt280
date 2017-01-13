@@ -1,3 +1,4 @@
+import lib280.list.LinkedList280;
 import java.util.Random;
 
 /**
@@ -5,6 +6,7 @@ import java.util.Random;
  */
 public class A1Q1 {
 
+    private LinkedList280<Sack> totalSacks[] = new LinkedList280[Grain.values().length];
 
     public  static  Sack[]  generatePlunder(int  howMany) {
         Random  generator = new Random();
@@ -16,4 +18,5 @@ public class A1Q1 {
         }
         return  grain;
     }
+
 }
