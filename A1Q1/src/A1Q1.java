@@ -32,20 +32,20 @@ public class A1Q1 {
         if(plunder != null) {
             for (Sack aPlunder : plunder) {
                 if (aPlunder != null) {
-                    if (aPlunder.getType() == Grain.WHEAT) {
-                        listOfSacks[Grain.WHEAT.ordinal()].insert(aPlunder);
-                    }
-                    if (aPlunder.getType() == Grain.BARLEY) {
-                        listOfSacks[Grain.BARLEY.ordinal()].insert(aPlunder);
-                    }
-                    if (aPlunder.getType() == Grain.OATS) {
-                        listOfSacks[Grain.OATS.ordinal()].insert(aPlunder);
+                    if (aPlunder.getType() == Grain.OTHER) {
+                        listOfSacks[Grain.OTHER.ordinal()].insert(aPlunder);
                     }
                     if (aPlunder.getType() == Grain.RYE) {
                         listOfSacks[Grain.RYE.ordinal()].insert(aPlunder);
                     }
-                    if (aPlunder.getType() == Grain.OTHER) {
-                        listOfSacks[Grain.OTHER.ordinal()].insert(aPlunder);
+                    if (aPlunder.getType() == Grain.OATS) {
+                        listOfSacks[Grain.OATS.ordinal()].insert(aPlunder);
+                    }
+                    if (aPlunder.getType() == Grain.BARLEY) {
+                        listOfSacks[Grain.BARLEY.ordinal()].insert(aPlunder);
+                    }
+                    if (aPlunder.getType() == Grain.WHEAT) {
+                        listOfSacks[Grain.WHEAT.ordinal()].insert(aPlunder);
                     }
                 }
             }
@@ -56,7 +56,7 @@ public class A1Q1 {
     public static LinkedList280<Sack> sumTotalPlunder(LinkedList280<Sack>[] sortedSacks) {
         LinkedList280<Sack> total = new LinkedList280();
 
-        for(int i = 0; i < Grain.values().length; i++) {
+        for(int i = (Grain.values().length - 1); i >= 0; i--) {
             double sum = 0;
 
             if(!sortedSacks[i].isEmpty()) {
@@ -82,6 +82,17 @@ public class A1Q1 {
         return total;
     }
 
+    public static void printList(LinkedList280<Sack> list) {
+        if(!list.isEmpty()) {
+            list.goFirst();
+
+            while(!list.after()) {
+                System.out.println("Jack plundered " + list.item().getWeight() + " pounds of " + list.item().getType());
+                list.goForth();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         sackCollection = new LinkedList280[Grain.values().length];
         todaysPlunder = generatePlunder(10);
@@ -90,7 +101,7 @@ public class A1Q1 {
 
         totalPlunder = sumTotalPlunder(sackCollection);
 
-        totalPlunder.goFirst();
+        printList(totalPlunder);
 
     }
 }
