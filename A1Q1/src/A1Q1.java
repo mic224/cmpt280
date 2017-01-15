@@ -8,6 +8,7 @@ public class A1Q1 {
 
     private static Sack todaysPlunder[];
     private static LinkedList280<Sack> sackCollection[];
+    private static LinkedList280<Sack> totalPlunder;
 
 
     public  static  Sack[]  generatePlunder(int  howMany) {
@@ -51,11 +52,45 @@ public class A1Q1 {
         }
         return listOfSacks;
     }
+
+    public static LinkedList280<Sack> sumTotalPlunder(LinkedList280<Sack>[] sortedSacks) {
+        LinkedList280<Sack> total = new LinkedList280();
+
+        for(int i = 0; i < Grain.values().length; i++) {
+            double sum = 0;
+
+            if(!sortedSacks[i].isEmpty()) {
+                total.insert(new Sack(sortedSacks[i].firstItem().getType(),sum));
+                total.goFirst();
+
+                sortedSacks[i].goFirst();
+                sum += sortedSacks[i].item().getWeight();
+                sortedSacks[i].goForth();
+
+                while(!sortedSacks[i].after()) {
+                    sum += sortedSacks[i].item().getWeight();
+                    sortedSacks[i].goForth();
+                }
+            }
+            else {
+                total.insert(new Sack(Grain.values()[i],sum));
+                total.goFirst();
+            }
+            total.item().setWeight(sum);
+        }
+
+        return total;
+    }
+
     public static void main(String[] args) {
         sackCollection = new LinkedList280[Grain.values().length];
         todaysPlunder = generatePlunder(10);
 
         sackCollection = sortSacks(todaysPlunder);
+
+        totalPlunder = sumTotalPlunder(sackCollection);
+
+        totalPlunder.goFirst();
 
     }
 }
