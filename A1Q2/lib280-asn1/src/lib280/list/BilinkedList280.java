@@ -269,6 +269,27 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 
 	/* Regression test. */
 	public static void main(String[] args) {
-		// TODO
+		BilinkedList280<Integer> L = new BilinkedList280<>();
+
+		// test isEmpty, isFull, insert, insertLast, insert,
+		// toString() (which implicitly tests iteration to some extent)
+
+		System.out.println(L);
+
+		System.out.print("List should be empty...");
+		if( L.isEmpty() ) System.out.println("and it is.");
+		else System.out.println("ERROR: and it is *NOT*.");
+
+		L.insertFirst(2);
+
+		if(L.isEmpty()) System.out.println("list not empty: PASS");
+		else System.out.println("Error: list is empty.");
+
+		if(L.isEmpty()) System.out.println("Error: list is empty.");
+		else
+		{
+			if(L.firstItem() == 2) System.out.println("first item in list is 2: PASS");
+			else System.out.println("Error first item should be 2");
+		}
 	}
 } 

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/A1Q1/A1Q1.iml" filepath="$PROJECT_DIR$/A1Q1/A1Q1.iml" />
-      <module fileurl="file://$USER_HOME$/Desktop/CMPT280/lib280-asn1/lib280-asn1/lib280-asn1.iml" filepath="$USER_HOME$/Desktop/CMPT280/lib280-asn1/lib280-asn1/lib280-asn1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/A1Q2/lib280-asn1/lib280-asn1.iml" filepath="$PROJECT_DIR$/A1Q2/lib280-asn1/lib280-asn1.iml" />
     </modules>
   </component>
 </project>
