@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e4fee1f1-3d02-40c3-8c6c-c774b1af07de" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/A1Q2/lib280-asn1/bin/lib280/list/BilinkedList280.class" afterPath="$PROJECT_DIR$/A1Q2/lib280-asn1/bin/lib280/list/BilinkedList280.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedIterator280.java" afterPath="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedIterator280.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java" afterPath="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BilinkedList280.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BilinkedList280.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3689">
-              <caret line="23" column="16" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+            <state relative-caret-position="2662">
+              <caret line="406" column="30" lean-forward="false" selection-start-line="406" selection-start-column="30" selection-end-line="406" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#860#861#0" expanded="true" />
@@ -36,19 +36,20 @@
                 <element signature="e#1225#1226#0" expanded="true" />
                 <element signature="e#2042#2043#0" expanded="true" />
                 <element signature="e#2068#2069#0" expanded="true" />
-                <element signature="e#8276#8277#0" expanded="true" />
-                <element signature="e#8322#8323#0" expanded="true" />
+                <element signature="e#8523#8524#0" expanded="true" />
+                <element signature="e#8569#8570#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BilinkedIterator280.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BilinkedIterator280.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedIterator280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-170">
-              <caret line="22" column="52" lean-forward="true" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+            <state relative-caret-position="408">
+              <caret line="54" column="42" lean-forward="false" selection-start-line="54" selection-start-column="42" selection-end-line="54" selection-end-column="42" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#699#700#0" expanded="true" />
                 <element signature="e#717#718#0" expanded="true" />
               </folding>
@@ -80,6 +81,7 @@
         <option value="$USER_HOME$/Desktop/CMPT280/lib280-asn1/lib280-asn1/src/lib280/list/BilinkedList280.java" />
         <option value="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/LinkedList280.java" />
         <option value="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java" />
+        <option value="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedIterator280.java" />
       </list>
     </option>
   </component>
@@ -703,21 +705,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedIterator280.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-170">
-          <caret line="22" column="52" lean-forward="true" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
-          <folding>
-            <element signature="e#699#700#0" expanded="true" />
-            <element signature="e#717#718#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3689">
-          <caret line="23" column="16" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        <state relative-caret-position="2662">
+          <caret line="406" column="30" lean-forward="false" selection-start-line="406" selection-start-column="30" selection-end-line="406" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#860#861#0" expanded="true" />
@@ -726,8 +717,20 @@
             <element signature="e#1225#1226#0" expanded="true" />
             <element signature="e#2042#2043#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
-            <element signature="e#8276#8277#0" expanded="true" />
-            <element signature="e#8322#8323#0" expanded="true" />
+            <element signature="e#8523#8524#0" expanded="true" />
+            <element signature="e#8569#8570#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedIterator280.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="54" column="42" lean-forward="false" selection-start-line="54" selection-start-column="42" selection-end-line="54" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#699#700#0" expanded="true" />
+            <element signature="e#717#718#0" expanded="true" />
           </folding>
         </state>
       </provider>

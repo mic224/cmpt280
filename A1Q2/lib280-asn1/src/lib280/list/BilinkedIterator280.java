@@ -37,7 +37,10 @@ public class BilinkedIterator280<I> extends LinkedIterator280<I> implements Bili
 	 */
 	public void  goLast() throws ContainerEmpty280Exception
 	{
-		// TODO
+		if( this.list.isEmpty() ) {
+			this.goAfter();
+			this.goBack();
+		} else throw new ContainerEmpty280Exception("Error: List is Empty.")
 	}
 
 	/**
@@ -46,8 +49,12 @@ public class BilinkedIterator280<I> extends LinkedIterator280<I> implements Bili
 	 */
 	public void goBack() throws BeforeTheStart280Exception
 	{
-		// TODO
-	}
+		if( !this.before() ) {
+			BilinkedNode280 temp = (BilinkedNode280)this.prev;
+			this.cur = temp;
+			this.prev = temp.previousNode;
+		} else throw new BeforeTheStart280Exception("Error: cursor is already before the start.");
+ 	}
 
 	/**	A shallow clone of this object. <br> 
 	Analysis: Time = O(1) */

@@ -220,7 +220,10 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void deleteFirst() throws ContainerEmpty280Exception
 	{
-		// TODO
+		if( !isEmpty() ) {
+			this.goFirst();
+			this.deleteItem();
+		} else throw new ContainerEmpty280Exception("Error: List is empty.");
 	}
 
 	/**
@@ -229,7 +232,10 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void deleteLast() throws ContainerEmpty280Exception
 	{
-		// TODO
+		if( !isEmpty() ) {
+			this.goLast();
+			this.deleteItem();
+		} else throw new ContainerEmpty280Exception("Error: List is empty.");
 	}
 
 	
@@ -395,6 +401,18 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 
 		if(L.tail.item() == 40) System.out.println("\tPASS: tail item is now 40.");
 		else System.out.println("\tFAIL: tail item should be 40.");
+
+		System.out.println("\nTesting deleteFirst()");
+		L.deleteFirst();
+		System.out.println("\tList: " + L);
+		if(L.head.item() == 6) System.out.println("\tPASS: head item is 6.");
+		else System.out.println("\tFAIL: head item should be 6.");
+
+		System.out.println("\nTesting deleteLast()");
+		L.deleteLast();
+		System.out.println("\tList: " + L);
+		if(L.tail.item() == 2) System.out.println("\tPASS: tail item is 2.");
+		else System.out.println("\tFAIL: tail item should be 2.");
 
 	}
 } 
