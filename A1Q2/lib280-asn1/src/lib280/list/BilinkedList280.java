@@ -41,7 +41,19 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void insertFirst(I x) 
 	{
-		super.insertFirst(x);
+		BilinkedNode280<I> newItem = createNewNode(x);
+		if( !this.isEmpty() ) {
+			BilinkedNode280<I> nextItem = (BilinkedNode280<I>)this.head;
+			nextItem.setPreviousNode(newItem);
+			newItem.setNextNode(nextItem);
+		}
+
+		// If the cursor is at the first node, cursor predecessor becomes the new node.
+		if( this.position == this.head ) this.prevPosition = newItem;
+
+		// Special case: if the list is empty, the new item also becomes the tail.
+		if( this.isEmpty() ) this.tail = newItem;
+		this.head = newItem;
 	}
 
 	/**
@@ -292,6 +304,23 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 
 			if(L.tail.item() == 2) System.out.println("PASS: tail item in list is 2.");
 			else System.out.println("FAIL: tail item should be 2");
+
 		}
+
+		L.insert(6);
+		L.insert(5);
+
+		L.insertLast(40);
+		L.insertLast(10);
+
+		if(L.lastItem() == 10) System.out.println("PASS: last item in list is 10");
+		else System.out.println("FAIL: last item should be 10");
+
+		BilinkedNode280<Integer> temp = (BilinkedNode280<Integer>)L.lastNode();
+
+		if(temp.previousNode().item() == 40) System.out.println("PASS: last items previous node value is 2");
+		else System.out.println("FAIL: last items previous node value should be 2");
+
+
 	}
 } 
