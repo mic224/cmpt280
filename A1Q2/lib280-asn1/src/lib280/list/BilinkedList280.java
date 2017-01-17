@@ -1,3 +1,13 @@
+// Assignment #1
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
+
 package lib280.list;
 
 

@@ -1,3 +1,12 @@
+// Assignment #1
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
 import lib280.list.LinkedList280;
 import java.util.Random;
 
