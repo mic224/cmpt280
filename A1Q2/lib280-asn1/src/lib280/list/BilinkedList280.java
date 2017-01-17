@@ -239,7 +239,10 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void goLast() throws ContainerEmpty280Exception
 	{
-		// TODO
+		if(!this.isEmpty()) {
+			this.goAfter();
+			this.goBack();
+		}
 	}
   
 	/**	Move back one item in the list. 
@@ -248,7 +251,11 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void goBack() throws BeforeTheStart280Exception
 	{
-		// TODO
+		if( !before() ) {
+			BilinkedNode280 temp = (BilinkedNode280) this.prevPosition;
+			this.position = temp;
+			this.prevPosition = temp.previousNode;
+		} else throw new BeforeTheStart280Exception("Error: already before the start of the list.");
 	}
 
 	/**	Iterator for list initialized to first item. 
@@ -341,11 +348,20 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 		L.insert(44);
 		L.insert(200);
 
+		System.out.println("\nTesting goBack()");
+		System.out.println("List: " + L);
+		L.goLast();
+		L.goBack();
+		L.goBack();
+		System.out.println("Current Position: " + L.currentPosition().item());
+		if(L.currentPosition().item() == 2) System.out.println("\tPASS: current position is 2.");
+		else System.out.println("\tFAIL: current position item should be 2.");
+
 		System.out.println("\nTesting goLast()");
 		System.out.println("List: " + L);
 		L.goFirst();
 		L.goLast();
-		if(L.position.item() == 10) System.out.println("\tPASS: cursor position item is 10.");
+		if(L.currentPosition().item() == 10) System.out.println("\tPASS: cursor position item is 10.");
 		else System.out.println("\tFAIL: cursor position item should be 10.");
 
 		System.out.println("\nTesting deleteItem()");
