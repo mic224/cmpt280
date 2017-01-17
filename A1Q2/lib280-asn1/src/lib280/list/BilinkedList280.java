@@ -341,6 +341,13 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 		L.insert(44);
 		L.insert(200);
 
+		System.out.println("\nTesting goLast()");
+		System.out.println("List: " + L);
+		L.goFirst();
+		L.goLast();
+		if(L.position.item() == 10) System.out.println("\tPASS: cursor position item is 10.");
+		else System.out.println("\tFAIL: cursor position item should be 10.");
+
 		System.out.println("\nTesting deleteItem()");
 		System.out.println("List: " + L);
 		L.goFirst();
