@@ -151,7 +151,9 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void deleteItem() throws NoCurrentItem280Exception
 	{
-		// TODO
+		if( this.itemExists() ) {
+			this.delete(this.position.item());
+		}
 	}
 
 	
