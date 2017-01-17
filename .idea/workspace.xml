@@ -25,8 +25,8 @@
       <file leaf-file-name="BilinkedList280.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="337" column="0" lean-forward="true" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
+            <state relative-caret-position="299">
+              <caret line="370" column="46" lean-forward="false" selection-start-line="370" selection-start-column="46" selection-end-line="370" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#860#861#0" expanded="true" />
@@ -35,8 +35,8 @@
                 <element signature="e#1225#1226#0" expanded="true" />
                 <element signature="e#2042#2043#0" expanded="true" />
                 <element signature="e#2068#2069#0" expanded="true" />
-                <element signature="e#7927#7928#0" expanded="true" />
-                <element signature="e#7973#7974#0" expanded="true" />
+                <element signature="e#7926#7927#0" expanded="true" />
+                <element signature="e#7972#7973#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -733,8 +733,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="337" column="0" lean-forward="true" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
+        <state relative-caret-position="299">
+          <caret line="370" column="46" lean-forward="false" selection-start-line="370" selection-start-column="46" selection-end-line="370" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#860#861#0" expanded="true" />
@@ -743,8 +743,8 @@
             <element signature="e#1225#1226#0" expanded="true" />
             <element signature="e#2042#2043#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
-            <element signature="e#7927#7928#0" expanded="true" />
-            <element signature="e#7973#7974#0" expanded="true" />
+            <element signature="e#7926#7927#0" expanded="true" />
+            <element signature="e#7972#7973#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -152,7 +152,6 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	public void deleteItem() throws NoCurrentItem280Exception
 	{
 		// TODO
-
 	}
 
 	
@@ -294,11 +293,14 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 		BilinkedList280<Integer> L = new BilinkedList280<>();
 
 		System.out.println("\nTesting Instantiation of BilinkedList");
+		System.out.println("List: " + L);
 		if( L.isEmpty() ) System.out.println("\tPASS: list empty.");
 		else System.out.println("\tFAIL: list should be empty.");
 
-		System.out.println("\nTesting insertFirst()");
 		L.insertFirst(2);
+
+		System.out.println("\nTesting insertFirst()");
+		System.out.println("List: " + L);
 
 		if(L.isEmpty()) System.out.println("\tFAIL: list is empty.");
 		else System.out.println("\tPASS: list not empty.");
@@ -320,10 +322,11 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 		L.insert(6);
 		L.insert(5);
 
-
-		System.out.println("\nTesting insertLast()");
 		L.insertLast(40);
 		L.insertLast(10);
+
+		System.out.println("\nTesting insertLast()");
+		System.out.println("List: " + L);
 
 		if(L.lastItem() == 10) System.out.println("\tPASS: last item in list is 10");
 		else System.out.println("\tFAIL: last item should be 10");
@@ -332,6 +335,41 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 
 		if(temp.previousNode().item() == 40) System.out.println("\tPASS: last items previous node value is 2");
 		else System.out.println("\tFAIL: last items previous node value should be 2");
+
+		L.insert(44);
+		L.insert(200);
+
+		System.out.println("\nTesting deleteItem()");
+		System.out.println("List: " + L);
+		L.goFirst();
+		if(!L.after()) {
+			L.goForth();
+			L.deleteItem();
+		}
+		if(L.position != null) System.out.println("\tPASS: cursor position node not null.");
+		else {
+			if(L.currentPosition().item() == 5) System.out.println("\tPASS: current cursor item is 5");
+			else System.out.println("\tFAIL: current cursor item should be 5.");
+
+			if(L.prevPosition.item() == 200) System.out.println("\tPASS: prevPosition is 200.");
+			else System.out.println("\tFAIL: prevPosition should be 200.");
+		}
+
+		L.goFirst();
+		L.deleteItem();
+		if(L.firstItem() == 5) System.out.println("\tPASS: firstItem is now 5.");
+		else System.out.println("\tFAIL: firstItem should now be 5.");
+
+		if(L.head.item() == 5) System.out.println("\tPASS: head item is now 5.");
+		else System.out.println("\tFAIL: head item should now be 5.");
+
+		L.goLast();
+		L.deleteItem();
+		if(L.lastItem() == 40) System.out.println("\tPASS: lastItem is now 40.");
+		else System.out.println("\tFAIL: lastItem should now be 40.");
+
+		if(L.tail.item() == 40) System.out.println("\tPASS: tail item is now 40.");
+		else System.out.println("\tFAIL: tail item should be 40.");
 
 	}
 } 
