@@ -41,7 +41,7 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void insertFirst(I x) 
 	{
-		// TODO
+		super.insertFirst(x);
 	}
 
 	/**
@@ -271,25 +271,27 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	public static void main(String[] args) {
 		BilinkedList280<Integer> L = new BilinkedList280<>();
 
-		// test isEmpty, isFull, insert, insertLast, insert,
-		// toString() (which implicitly tests iteration to some extent)
-
 		System.out.println(L);
 
-		System.out.print("List should be empty...");
-		if( L.isEmpty() ) System.out.println("and it is.");
-		else System.out.println("ERROR: and it is *NOT*.");
+		if( L.isEmpty() ) System.out.println("PASS: list empty.");
+		else System.out.println("FAIL: and it is *NOT*.");
 
 		L.insertFirst(2);
 
-		if(L.isEmpty()) System.out.println("list not empty: PASS");
-		else System.out.println("Error: list is empty.");
+		if(L.isEmpty()) System.out.println("FAIL: list is empty.");
+		else System.out.println("PASS: list not empty.");
 
-		if(L.isEmpty()) System.out.println("Error: list is empty.");
+		if(L.isEmpty()) System.out.println("FAIL: list is empty.");
 		else
 		{
-			if(L.firstItem() == 2) System.out.println("first item in list is 2: PASS");
-			else System.out.println("Error first item should be 2");
+			if(L.firstItem() == 2) System.out.println("PASS: first item in list is 2.");
+			else System.out.println("FAIL: first item should be 2");
+
+			if(L.head.item() == 2) System.out.println("PASS: head item in list is 2.");
+			else System.out.println("FAIL: head item should be 2");
+
+			if(L.tail.item() == 2) System.out.println("PASS: tail item in list is 2.");
+			else System.out.println("FAIL: tail item should be 2");
 		}
 	}
 } 
