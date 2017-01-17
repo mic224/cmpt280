@@ -40,7 +40,7 @@ public class BilinkedIterator280<I> extends LinkedIterator280<I> implements Bili
 		if( this.list.isEmpty() ) {
 			this.goAfter();
 			this.goBack();
-		} else throw new ContainerEmpty280Exception("Error: List is Empty.")
+		} else throw new ContainerEmpty280Exception("Error: List is Empty.");
 	}
 
 	/**
