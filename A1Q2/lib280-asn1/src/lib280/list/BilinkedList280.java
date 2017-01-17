@@ -132,7 +132,17 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	 */
 	public void insertLast(I x) 
 	{
-		// TODO
+		BilinkedNode280<I> newTailNode = createNewNode(x);
+
+		if(!this.isEmpty()) {
+			newTailNode.setPreviousNode((BilinkedNode280) this.tail);
+
+			this.tail.nextNode = newTailNode;
+			this.tail = newTailNode;
+		} else {
+			this.insertFirst(x);
+		}
+
 	}
 
 	/**
@@ -283,44 +293,45 @@ public class BilinkedList280<I> extends LinkedList280<I> implements BilinearIter
 	public static void main(String[] args) {
 		BilinkedList280<Integer> L = new BilinkedList280<>();
 
-		System.out.println(L);
+		System.out.println("\nTesting Instantiation of BilinkedList");
+		if( L.isEmpty() ) System.out.println("\tPASS: list empty.");
+		else System.out.println("\tFAIL: list should be empty.");
 
-		if( L.isEmpty() ) System.out.println("PASS: list empty.");
-		else System.out.println("FAIL: and it is *NOT*.");
-
+		System.out.println("\nTesting insertFirst()");
 		L.insertFirst(2);
 
-		if(L.isEmpty()) System.out.println("FAIL: list is empty.");
-		else System.out.println("PASS: list not empty.");
+		if(L.isEmpty()) System.out.println("\tFAIL: list is empty.");
+		else System.out.println("\tPASS: list not empty.");
 
-		if(L.isEmpty()) System.out.println("FAIL: list is empty.");
+		if(L.isEmpty()) System.out.println("\tFAIL: list is empty.");
 		else
 		{
-			if(L.firstItem() == 2) System.out.println("PASS: first item in list is 2.");
-			else System.out.println("FAIL: first item should be 2");
+			if(L.firstItem() == 2) System.out.println("\tPASS: first item in list is 2.");
+			else System.out.println("\tFAIL: first item should be 2");
 
-			if(L.head.item() == 2) System.out.println("PASS: head item in list is 2.");
-			else System.out.println("FAIL: head item should be 2");
+			if(L.head.item() == 2) System.out.println("\tPASS: head item in list is 2.");
+			else System.out.println("\tFAIL: head item should be 2");
 
-			if(L.tail.item() == 2) System.out.println("PASS: tail item in list is 2.");
-			else System.out.println("FAIL: tail item should be 2");
+			if(L.tail.item() == 2) System.out.println("\tPASS: tail item in list is 2.");
+			else System.out.println("\tFAIL: tail item should be 2");
 
 		}
 
 		L.insert(6);
 		L.insert(5);
 
+
+		System.out.println("\nTesting insertLast()");
 		L.insertLast(40);
 		L.insertLast(10);
 
-		if(L.lastItem() == 10) System.out.println("PASS: last item in list is 10");
-		else System.out.println("FAIL: last item should be 10");
+		if(L.lastItem() == 10) System.out.println("\tPASS: last item in list is 10");
+		else System.out.println("\tFAIL: last item should be 10");
 
 		BilinkedNode280<Integer> temp = (BilinkedNode280<Integer>)L.lastNode();
 
-		if(temp.previousNode().item() == 40) System.out.println("PASS: last items previous node value is 2");
-		else System.out.println("FAIL: last items previous node value should be 2");
-
+		if(temp.previousNode().item() == 40) System.out.println("\tPASS: last items previous node value is 2");
+		else System.out.println("\tFAIL: last items previous node value should be 2");
 
 	}
 } 

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e4fee1f1-3d02-40c3-8c6c-c774b1af07de" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/A1Q2/lib280-asn1/bin/lib280/list/BilinkedList280.class" afterPath="$PROJECT_DIR$/A1Q2/lib280-asn1/bin/lib280/list/BilinkedList280.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java" afterPath="$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -24,8 +25,8 @@
       <file leaf-file-name="BilinkedList280.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="323" column="0" lean-forward="true" selection-start-line="323" selection-start-column="0" selection-end-line="323" selection-end-column="0" />
+            <state relative-caret-position="384">
+              <caret line="337" column="0" lean-forward="true" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#860#861#0" expanded="true" />
@@ -34,8 +35,8 @@
                 <element signature="e#1225#1226#0" expanded="true" />
                 <element signature="e#2042#2043#0" expanded="true" />
                 <element signature="e#2068#2069#0" expanded="true" />
-                <element signature="e#7692#7693#0" expanded="true" />
-                <element signature="e#7738#7739#0" expanded="true" />
+                <element signature="e#7927#7928#0" expanded="true" />
+                <element signature="e#7973#7974#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -502,7 +503,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40365985" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40365985" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -513,7 +514,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33046287" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33046287" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -732,8 +733,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/A1Q2/lib280-asn1/src/lib280/list/BilinkedList280.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="323" column="0" lean-forward="true" selection-start-line="323" selection-start-column="0" selection-end-line="323" selection-end-column="0" />
+        <state relative-caret-position="384">
+          <caret line="337" column="0" lean-forward="true" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#860#861#0" expanded="true" />
@@ -742,8 +743,8 @@
             <element signature="e#1225#1226#0" expanded="true" />
             <element signature="e#2042#2043#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
-            <element signature="e#7692#7693#0" expanded="true" />
-            <element signature="e#7738#7739#0" expanded="true" />
+            <element signature="e#7927#7928#0" expanded="true" />
+            <element signature="e#7973#7974#0" expanded="true" />
           </folding>
         </state>
       </provider>
