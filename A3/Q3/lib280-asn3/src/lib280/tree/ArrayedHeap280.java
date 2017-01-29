@@ -43,6 +43,10 @@ public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBina
         }
     }
 
+    /**
+     * recursiveDelete
+     * a helper method that recursively sorts the heap after a deletion.
+     */
     public void recursiveDelete() {
         int largestChildPos;
         I offendingNode;

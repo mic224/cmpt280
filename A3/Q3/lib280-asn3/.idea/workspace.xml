@@ -24,8 +24,8 @@
       <file leaf-file-name="ArrayedHeap280.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lib280/tree/ArrayedHeap280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="244" column="16" lean-forward="true" selection-start-line="244" selection-start-column="16" selection-end-line="244" selection-end-column="16" />
+            <state relative-caret-position="323">
+              <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -509,12 +509,6 @@
           <properties />
           <option name="timeStamp" value="181" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/lib280/tree/ArrayedHeap280.java</url>
-          <line>79</line>
-          <properties />
-          <option name="timeStamp" value="265" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -731,8 +725,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib280/tree/ArrayedHeap280.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="244" column="16" lean-forward="true" selection-start-line="244" selection-start-column="16" selection-end-line="244" selection-end-column="16" />
+        <state relative-caret-position="323">
+          <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
