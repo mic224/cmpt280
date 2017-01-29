@@ -11,12 +11,17 @@ import java.util.concurrent.ThreadLocalRandom;
  * Created by michael on 28/01/17.
  */
 public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBinaryTree280<I> implements Dispenser280<I> {
-
+    /**
+     * Constructor.
+     *
+     * @param cap Maximum number of elements that can be in the lib280.tree.
+     */
     public ArrayedHeap280(int cap) {
         super(cap);
         items = (I[]) new Comparable[capacity + 1];
     }
 
+    @Override
     public void insert(I x) throws ContainerFull280Exception, DuplicateItems280Exception {
         if (this.isFull()) throw new ContainerFull280Exception("Cannot add item to a tree that is full.");
         else {
@@ -39,7 +44,9 @@ public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBina
 
     @Override
     public void deleteItem() throws NoCurrentItem280Exception {
+        if(!this.isEmpty()) {
 
+        }
     }
 
     public static void main(String[] args) {
@@ -182,7 +189,7 @@ public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBina
         }
 
         System.out.println("\n Testing deletion of all items in tree.");
-        while(heap.count > 0) {
+        for(int i = 0; i < 14; i++) {
             heap.deleteItem();
         }
 
