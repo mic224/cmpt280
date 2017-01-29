@@ -1,3 +1,4 @@
+import lib280.base.Pair280;
 import lib280.list.LinkedList280;
 import lib280.tree.BasicMAryTree280;
 
@@ -55,7 +56,7 @@ public class SkillTree extends BasicMAryTree280<Skill> {
      * @return LinkedList280 representing all skill depencies of name including name.
      * @precond the given skill exists.
      */
-    public LinkedList280<Skill> skillDependencies(String name) {
+    public LinkedList280<Skill> skillDependencies(String name) throws RuntimeException {
         return new LinkedList280<>();
     }
 
@@ -89,8 +90,41 @@ public class SkillTree extends BasicMAryTree280<Skill> {
                 "Accurate hit.", 3);
 
 
-        
+        LinkedList280<Skill> dependencies = new LinkedList280<>();
+        try {
+            dependencies = offenseTree.skillDependencies("FAKE");
+        } catch (RuntimeException e) {
+            System.out.println("ERROR.");
+        }
 
+        dependencies = offenseTree.skillDependencies("Eye Gouge");
+
+        if(dependencies.isEmpty()) {
+            System.out.println("Failed: List Should Not Be Empty.");
+        } else {
+            System.out.println("PASSED");
+        }
+
+        dependencies.goFirst();
+        if(dependencies.item().getSkillName() != "Offense") {
+            System.out.println("Failed: Root Dependecy Should be Offense.");
+        } else {
+            System.out.println("PASSED");
+        }
+
+        dependencies.goForth();
+        if(dependencies.item().getSkillName() != "Accuracy") {
+            System.out.println("Failed: Second Dependency Should be Accuracy.");
+        } else {
+            System.out.println("PASSED");
+        }
+
+        dependencies.goForth();
+        if(dependencies.item().getSkillName() != "Eye Gouge") {
+            System.out.println("Failed: Last Dependency Should be Eye Gouge.");
+        } else {
+            System.out.println("PASSED");
+        }
     }
 
 }
