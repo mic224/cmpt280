@@ -5,6 +5,8 @@ import lib280.exception.ContainerFull280Exception;
 import lib280.exception.DuplicateItems280Exception;
 import lib280.exception.NoCurrentItem280Exception;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * Created by michael on 28/01/17.
  */
@@ -42,7 +44,7 @@ public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBina
 
     public static void main(String[] args) {
         System.out.println("Testing initial heap:");
-        ArrayedHeap280<Integer> heap = new ArrayedHeap280<>(16);
+        ArrayedHeap280<Integer> heap = new ArrayedHeap280<>(15);
 
         if ((heap == null) || (!heap.isEmpty()) || (heap.capacity() != 16)) {
             System.out.println("\t Failed.\n");
@@ -122,6 +124,70 @@ public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBina
         testItem = heap.item();
         if (testItem != 230) {
             System.out.println("\t Failed: root node should be 230.");
+        } else {
+            System.out.println("\t Passed.");
+        }
+
+
+        System.out.println("\n Testing inserting capacity of the tree");
+        heap.insert(5);
+        heap.insert(3);
+        heap.insert(2);
+
+        try {
+            heap.insert(44);
+        } catch (ContainerFull280Exception e) {
+            System.out.println("\t Passed.");
+        }
+
+        System.out.println("\n Testing deletion from tree.") ;
+        heap.deleteItem();
+
+        heap.currentNode = heap.count;
+        testItem = heap.item();
+        if(heap.currentNode != 14) {
+            System.out.println("\t Failed: number of elements in heap should be 15.");
+        } else {
+            System.out.println("\t Passed.");
+        }
+
+        if(testItem != 2) {
+            System.out.println("\t Failed: last item should be 2.");
+        } else {
+            System.out.println("\t Passed.");
+        }
+
+        heap.currentNode = 7;
+        testItem = heap.item();
+        if(testItem != 3) {
+            System.out.println("\t Failed: item 7 should be 3.");
+        } else {
+            System.out.println("\t Passed.");
+        }
+
+        heap.currentNode = 3;
+        testItem = heap.item();
+        if(testItem != 79) {
+            System.out.println("\t Failed: item 3 should be 79.");
+        } else {
+            System.out.println("\t Passed.");
+        }
+
+        heap.currentNode = 1;
+        testItem = heap.item();
+        if(testItem != 101) {
+            System.out.println("\t Failed: root node should be 101.");
+        } else {
+            System.out.println("\t Passed.");
+        }
+
+        System.out.println("\n Testing deletion of all items in tree.");
+        while(heap.count > 0) {
+            heap.deleteItem();
+        }
+
+        if(!heap.isEmpty()) {
+            System.out.println("\t Failed: tree should now be empty.");
         } else {
             System.out.println("\t Passed.");
         }
