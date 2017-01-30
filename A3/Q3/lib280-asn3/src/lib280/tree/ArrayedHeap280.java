@@ -1,3 +1,12 @@
+// Assignment #3 Question 3
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
 package lib280.tree;
 
 import lib280.base.CursorPosition280;
@@ -8,9 +17,6 @@ import lib280.exception.NoCurrentItem280Exception;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Created by michael on 28/01/17.
- */
 public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBinaryTree280<I> implements Dispenser280<I> {
     /**
      * Constructor.
