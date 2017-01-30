@@ -1,3 +1,11 @@
+// Assignment #3 Question 4
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
 
 /* This class stores the data for a single skill in a 
  * skill tree for a hypothetical video game.
