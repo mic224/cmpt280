@@ -1,6 +1,7 @@
 import lib280.base.Pair280;
 import lib280.list.LinkedList280;
 import lib280.tree.BasicMAryTree280;
+import lib280.tree.MAryNode280;
 
 public class SkillTree extends BasicMAryTree280<Skill> {
 
@@ -57,7 +58,43 @@ public class SkillTree extends BasicMAryTree280<Skill> {
      * @precond the given skill exists.
      */
     public LinkedList280<Skill> skillDependencies(String name) throws RuntimeException {
-        return new LinkedList280<>();
+        LinkedList280<Skill> s = new LinkedList280<>();
+        treeSearch(s, this.rootNode, name);
+        if(s.isEmpty()) {
+            throw new RuntimeException("Error: item with name: \" " + name + " \" does not exist.");
+        }
+        s.insert(this.rootItem());
+        return s;
+    }
+
+    /**
+     * Recursive function to search the tree for a given item.
+     * Compile a LinkedList with the given item as well as its
+     * dependencies.
+     *
+     * @param list    The list to populate with skill & all dependencies.
+     * @param curNode The current node the recursive function is working on.
+     * @param name    String with the given items name.
+     */
+    protected void treeSearch(LinkedList280<Skill> list, MAryNode280 curNode, String name) {
+        Skill parent;
+        Skill child;
+        if (curNode != null) {
+            parent = (Skill) curNode.item();
+
+            for (int i = 1; i <= curNode.count(); i++) {
+                if (curNode.subnode(i) != null) {
+                    child = (Skill) curNode.subnode(i).item();
+
+                    if (child.getSkillName() == name) {
+                        list.insert(child);
+                        treeSearch(list, this.rootNode, parent.getSkillName());
+                    }
+
+                    treeSearch(list, curNode.subnode(i), name);
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -82,49 +119,59 @@ public class SkillTree extends BasicMAryTree280<Skill> {
         offenseTree.rootSubTree(2).setTreeNode(offenseTree.rootSubTree(2), "Scatter Shot",
                 "Do splash damage to multiple enemies", 3);
 
-        offenseTree.rootSubTree(3).setTreeNode(offenseTree.rootSubTree(3), "Eye Gouge",
-                "Quick cheap shot.", 3);
         offenseTree.rootSubTree(3).setTreeNode(offenseTree.rootSubTree(3), "Target",
                 "Increase hit rate making it easier to hit enemies.", 3);
         offenseTree.rootSubTree(3).setTreeNode(offenseTree.rootSubTree(3), "Snipe",
                 "Accurate hit.", 3);
 
+        Skill eyeGouge = new Skill("Eye Gouge","Quick cheap shot.", 3);
+        SkillTree eyeGougeTree = new SkillTree(eyeGouge, 0);
+        offenseTree.rootSubTree(3).rootSubTree(2).setRootSubtree(eyeGougeTree, 2);
 
-        LinkedList280<Skill> dependencies = new LinkedList280<>();
-        try {
-            dependencies = offenseTree.skillDependencies("FAKE");
-        } catch (RuntimeException e) {
-            System.out.println("ERROR.");
-        }
-
+        LinkedList280<Skill> dependencies;
+        System.out.println(offenseTree.toStringByLevel());
         dependencies = offenseTree.skillDependencies("Eye Gouge");
 
-        if(dependencies.isEmpty()) {
+        if (dependencies.isEmpty()) {
             System.out.println("Failed: List Should Not Be Empty.");
         } else {
             System.out.println("PASSED");
         }
 
         dependencies.goFirst();
-        if(dependencies.item().getSkillName() != "Offense") {
+        if (dependencies.item().getSkillName() != "Offense") {
             System.out.println("Failed: Root Dependecy Should be Offense.");
         } else {
             System.out.println("PASSED");
         }
 
         dependencies.goForth();
-        if(dependencies.item().getSkillName() != "Accuracy") {
+        if (dependencies.item().getSkillName() != "Accuracy") {
             System.out.println("Failed: Second Dependency Should be Accuracy.");
         } else {
             System.out.println("PASSED");
         }
 
         dependencies.goForth();
-        if(dependencies.item().getSkillName() != "Eye Gouge") {
+        if (dependencies.item().getSkillName() != "Snipe") {
+            System.out.println("Failed: Third Dependency Should be Snipe.");
+        } else {
+            System.out.println("PASSED");
+        }
+
+        dependencies.goForth();
+        if (dependencies.item().getSkillName() != "Eye Gouge") {
             System.out.println("Failed: Last Dependency Should be Eye Gouge.");
         } else {
             System.out.println("PASSED");
         }
+
+        try {
+            dependencies = offenseTree.skillDependencies("FAKE");
+        } catch (RuntimeException e) {
+            System.out.println("PASSED");
+        }
+
     }
 
 }
