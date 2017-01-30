@@ -157,7 +157,7 @@ public class SkillTree extends BasicMAryTree280<Skill> {
         offenseTree.rootSubTree(3).rootSubTree(2).setRootSubtree(eyeGougeTree, 2);
 
         LinkedList280<Skill> dependencies;
-        System.out.println(offenseTree.toStringByLevel());
+
         dependencies = offenseTree.skillDependencies("Eye Gouge");
 
         if (dependencies.isEmpty()) {
@@ -212,7 +212,7 @@ public class SkillTree extends BasicMAryTree280<Skill> {
             System.out.println("PASSED");
         }
 
-
+        System.out.println("Skill Tree: ");
         System.out.println(offenseTree.toStringByLevel());
         System.out.println("\nDependencies for Eye Gouge: ");
         System.out.println(dependencies.toString());
