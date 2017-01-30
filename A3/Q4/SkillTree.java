@@ -1,4 +1,12 @@
-import lib280.base.Pair280;
+// Assignment #3 Question 4
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
 import lib280.list.LinkedList280;
 import lib280.tree.BasicMAryTree280;
 import lib280.tree.MAryNode280;
@@ -97,25 +105,45 @@ public class SkillTree extends BasicMAryTree280<Skill> {
         }
     }
 
+    /**
+     * Calculate the total cost to obtain a given skill in the tree.
+     *
+     * @param name String the given skill to list depencies of.
+     * @return int Total cost to obtain given skill.
+     * @precond the given skill exists.
+     */
+    public int skillTotalCost(String name) {
+        LinkedList280<Skill> s = new LinkedList280<>();
+        int total = 0;
+        s = skillDependencies(name);
+
+        s.goFirst();
+        while(!s.after()) {
+            total += s.item().getSkillCost();
+            s.goForth();
+        }
+        return total;
+    }
+
     public static void main(String[] args) {
         Skill offense = new Skill("Offense", "Main offensive skills.", 1);
         SkillTree offenseTree = new SkillTree(offense, 3);
 
-        offenseTree.setTreeNode(offenseTree, "Power", "Power Skills.", 2);
-        offenseTree.setTreeNode(offenseTree, "Speed", "Speed Skills.", 2);
-        offenseTree.setTreeNode(offenseTree, "Accuracy", "Accuracy Skills.", 2);
+        offenseTree.setTreeNode(offenseTree, "Power", "Power Skills.", 1);
+        offenseTree.setTreeNode(offenseTree, "Speed", "Speed Skills.", 1);
+        offenseTree.setTreeNode(offenseTree, "Accuracy", "Accuracy Skills.", 1);
 
         offenseTree.rootSubTree(1).setTreeNode(offenseTree.rootSubTree(1), "Bash",
-                "A powerful melee attack.", 3);
+                "A powerful melee attack.", 2);
         offenseTree.rootSubTree(1).setTreeNode(offenseTree.rootSubTree(1), "Armor Pierce",
-                "Temporarily reduce enemy armor.", 3);
+                "Temporarily reduce enemy armor.", 1);
         offenseTree.rootSubTree(1).setTreeNode(offenseTree.rootSubTree(1), "Massive Attack",
-                "A massive attack that uses lots of energy.", 3);
+                "A massive attack that uses lots of energy.", 1);
 
         offenseTree.rootSubTree(2).setTreeNode(offenseTree.rootSubTree(2), "Flury",
-                "A series of quick fast attacks.", 3);
+                "A series of quick fast attacks.", 1);
         offenseTree.rootSubTree(2).setTreeNode(offenseTree.rootSubTree(2), "Rebound",
-                "Counter an enemy attack.", 3);
+                "Counter an enemy attack.", 2);
         offenseTree.rootSubTree(2).setTreeNode(offenseTree.rootSubTree(2), "Scatter Shot",
                 "Do splash damage to multiple enemies", 3);
 
@@ -124,7 +152,7 @@ public class SkillTree extends BasicMAryTree280<Skill> {
         offenseTree.rootSubTree(3).setTreeNode(offenseTree.rootSubTree(3), "Snipe",
                 "Accurate hit.", 3);
 
-        Skill eyeGouge = new Skill("Eye Gouge","Quick cheap shot.", 3);
+        Skill eyeGouge = new Skill("Eye Gouge","Quick cheap shot.", 5);
         SkillTree eyeGougeTree = new SkillTree(eyeGouge, 0);
         offenseTree.rootSubTree(3).rootSubTree(2).setRootSubtree(eyeGougeTree, 2);
 
@@ -171,6 +199,24 @@ public class SkillTree extends BasicMAryTree280<Skill> {
         } catch (RuntimeException e) {
             System.out.println("PASSED");
         }
+
+        if(offenseTree.skillTotalCost("Eye Gouge") == 10) {
+            System.out.println("PASSED");
+        } else {
+            System.out.println("Failed: Cost of Eye Gouge should be 10.");
+        }
+
+        try {
+            int i = offenseTree.skillTotalCost("FAKE");
+        } catch (RuntimeException e) {
+            System.out.println("PASSED");
+        }
+
+
+        System.out.println(offenseTree.toStringByLevel());
+        System.out.println("\nDependencies for Eye Gouge: ");
+        System.out.println(dependencies.toString());
+        System.out.println("To get Eye Gouge you must invest " + offenseTree.skillTotalCost("Eye Gouge") + " points.");
 
     }
 
