@@ -60,7 +60,7 @@ public class PriorityQueue280<I extends Comparable<? super I>> {
 
             while (!iter.after()) {
                 I nextItem = iter.item();
-                if(nextItem != null) {
+                if (nextItem != null) {
                     if (curMin.compareTo(nextItem) > 0) {
                         curMin = nextItem;
                     }
@@ -78,14 +78,34 @@ public class PriorityQueue280<I extends Comparable<? super I>> {
 
     public void deleteMin() throws ContainerEmpty280Exception {
         if (!this.isEmpty()) {
-            //TODO : implementations
+            ArrayedBinaryTreeIterator280<I> iter = this.items.iterator();
+
+            iter.goFirst();
+            I min = this.minItem();
+
+            while (!iter.after()) {
+                if (iter.item().compareTo(min) == 0) {
+                    this.items.deleteAtPosition(iter);
+                }
+                iter.goForth();
+            }
         } else
             throw new ContainerEmpty280Exception("ERROR: No min item the queue is empty.");
     }
 
     public void deleteAllMax() {
         if (!this.isEmpty()) {
-            //TODO : implementations
+            ArrayedBinaryTreeIterator280<I> iter = this.items.iterator();
+
+            iter.goFirst();
+            I curMax = iter.item();
+
+            while (!iter.after()) { 
+                if (curMax.compareTo(iter.item()) == 1)
+                    this.items.deleteAtPosition(iter);
+                if (!iter.after())
+                    iter.goForth();
+            }
         } else
             throw new ContainerEmpty280Exception("ERROR: No max item the queue is empty.");
     }
