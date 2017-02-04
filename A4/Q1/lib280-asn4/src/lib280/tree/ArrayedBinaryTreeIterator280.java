@@ -33,7 +33,7 @@ public class ArrayedBinaryTreeIterator280<I> extends ArrayedBinaryTreePosition28
 
 	@Override
 	public boolean after() {
-		return this.currentNode > this.tree.count;
+		return this.currentNode > tree.count;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ArrayedBinaryTreeIterator280<I> extends ArrayedBinaryTreePosition28
 
 	@Override
 	public void goFirst() throws ContainerEmpty280Exception {
-		if( this.tree.isEmpty() ) throw new ContainerEmpty280Exception("Cannot move to first item of an empty tree.");
+		if( tree.isEmpty() ) throw new ContainerEmpty280Exception("Cannot move to first item of an empty tree.");
 		this.currentNode = 1;
 	}
 
@@ -55,17 +55,17 @@ public class ArrayedBinaryTreeIterator280<I> extends ArrayedBinaryTreePosition28
 
 	@Override
 	public void goAfter() {
-		this.currentNode = this.tree.count + 1;
+		this.currentNode = tree.count + 1;
 	}
 
 	@Override
 	public I item() throws NoCurrentItem280Exception {
-		return this.tree.item();
+		return this.tree.items[this.currentNode];
 	}
 
 	@Override
 	public boolean itemExists() {
-		return this.tree.itemExists();
+		return tree.itemExists();
 	}
 
 

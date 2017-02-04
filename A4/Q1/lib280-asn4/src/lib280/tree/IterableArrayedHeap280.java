@@ -46,8 +46,6 @@ public class IterableArrayedHeap280<I extends Comparable<? super I>> extends Arr
 			// If the parent is smaller than the root...
 		}
 
-
-
 //		while( findLeftChild(n) <= count ) {
 //			// Select the left child.
 //			int child = findLeftChild(n);
@@ -68,6 +66,11 @@ public class IterableArrayedHeap280<I extends Comparable<? super I>> extends Arr
 //
 //		}
 	}
+
+	public ArrayedBinaryTreeIterator280<I> iterator() {
+		return new ArrayedBinaryTreeIterator280<I>(this);
+	}
+
 
 	/**
 	 * Helper for the regression test.  Verifies the heap property for all nodes.

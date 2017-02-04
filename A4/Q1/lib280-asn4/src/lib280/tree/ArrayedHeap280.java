@@ -156,7 +156,7 @@ public class ArrayedHeap280<I extends Comparable<? super I>> extends ArrayedBina
 				if(!H.hasHeapProperty()) System.out.println("Does not have heap property.");
 			}
 		}
-		
+
 		System.out.println("Regression Test Complete.");
 	}
 
