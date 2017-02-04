@@ -100,11 +100,15 @@ public class PriorityQueue280<I extends Comparable<? super I>> {
             iter.goFirst();
             I curMax = iter.item();
 
-            while (!iter.after()) { 
-                if (curMax.compareTo(iter.item()) == 1)
+            while (!iter.after()) {
+                I curItem = iter.item();
+                if (curMax.compareTo(curItem) == 0)
                     this.items.deleteAtPosition(iter);
-                if (!iter.after())
-                    iter.goForth();
+                else {
+                    if (!iter.after())
+                        iter.goForth();
+                }
+
             }
         } else
             throw new ContainerEmpty280Exception("ERROR: No max item the queue is empty.");

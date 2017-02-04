@@ -18,41 +18,49 @@ public class IterableArrayedHeap280<I extends Comparable<? super I>> extends Arr
     public void deleteAtPosition(ArrayedBinaryTreeIterator280 iter) {
 
         if (this.count > 1) {
-            I itemToDelete = this.items[iter.currentNode];
 
-            // swap the root with the item of interest
-            this.currentNode = 1;
-            this.items[iter.currentNode] = this.items[currentNode];
-            this.items[currentNode] = itemToDelete;
+            if(iter.currentNode > 1) { // not pointing at the root follow algorith.
+                I itemToDelete = this.items[iter.currentNode];
 
-            // swap root(in new position) with last item
-            itemToDelete = this.items[iter.currentNode];
-            this.items[iter.currentNode] = this.items[this.count];
-            this.items[this.count] = itemToDelete;
+                // 1 swap the root with the item of interest
+                this.currentNode = 1;
+                this.items[iter.currentNode] = this.items[currentNode];
+                this.items[currentNode] = itemToDelete;
 
-            // delete root
-            this.deleteItem();
+                // 2 swap root(in new position) with last item
+                itemToDelete = this.items[iter.currentNode];
+                this.items[iter.currentNode] = this.items[this.count];
+                this.items[this.count] = itemToDelete;
 
-            // propagate last node(in new spot) down the heap.
-            // While offset n has a left child...
-            while (findLeftChild(iter.currentNode) <= count) {
-                // Select the left child.
-                int child = findLeftChild(iter.currentNode);
+                // 3 delete root
+                this.deleteItem();
 
-                // If the right child exists and is larger, select it instead.
-                if (child + 1 <= count && items[child].compareTo(items[child + 1]) < 0)
-                    child++;
+                // 4 propagate last node(in new spot) down the heap.
+                while (findLeftChild(iter.currentNode) <= count) {
+                    // Select the left child.
+                    int child = findLeftChild(iter.currentNode);
 
-                // If the parent is smaller than the root...
-                if (items[iter.currentNode].compareTo(items[child]) < 0) {
-                    // Swap them.
-                    I temp = items[iter.currentNode];
-                    items[iter.currentNode] = items[child];
-                    items[child] = temp;
-                    iter.currentNode = child;
-                } else return;
+                    // If the right child exists and is larger, select it instead.
+                    if (child + 1 <= count && items[child].compareTo(items[child + 1]) < 0)
+                        child++;
 
+                    // If the parent is smaller than the root...
+                    if (items[iter.currentNode].compareTo(items[child]) < 0) {
+                        // Swap them.
+                        I temp = items[iter.currentNode];
+                        items[iter.currentNode] = items[child];
+                        items[child] = temp;
+                        iter.currentNode = child;
+                    } else return;
+
+                }
+            } else {
+                // cursor is pointing at the root; just delete the root.
+                this.deleteItem();
             }
+        } else {
+            // heap only has 1 item left; delete it
+            this.deleteItem();
         }
     }
 
