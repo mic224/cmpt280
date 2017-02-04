@@ -26,9 +26,41 @@ public class PriorityQueue280<I extends Comparable<? super I>> {
 	
 	// TODO
 	// Add Priority Queue ADT methods (from the specification) here.
-	
+	public PriorityQueue280<I> insert(I x) {
+		return null;
+	}
 
-	/* UNCOMMENT THE REGRESSION TEST WHEN YOU ARE READY
+	public boolean isFull() {
+		return false;
+	}
+
+	public boolean isEmpty() {
+		return false;
+	}
+
+	public int count() {
+		return 0;
+	}
+
+	public I maxItem() {
+		return null;
+	}
+
+	public I minItem() {
+		return null;
+	}
+
+	public PriorityQueue280<I> deleteMax() {
+		return null;
+	}
+
+	public PriorityQueue280<I> deleteMin() {
+		return null;
+	}
+
+	public PriorityQueue280<I> deleteAllMax() {
+		return null;
+	}
 
 	public static void main(String args[]) {
 		class PriorityItem<I> implements Comparable<PriorityItem<I>> {
@@ -151,5 +183,4 @@ public class PriorityQueue280<I extends Comparable<? super I>> {
 	}
 
 
-	*/
 }
