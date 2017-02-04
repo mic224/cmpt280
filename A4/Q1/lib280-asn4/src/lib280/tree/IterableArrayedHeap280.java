@@ -1,3 +1,12 @@
+// Assignment #4
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
 package lib280.tree;
 
 public class IterableArrayedHeap280<I extends Comparable<? super I>> extends ArrayedHeap280<I> {
@@ -11,13 +20,9 @@ public class IterableArrayedHeap280<I extends Comparable<? super I>> extends Arr
         super(cap);
     }
 
-    // TODO
-    // Add iterator() and deleteAtPosition() methods here.
-
-
     public void deleteAtPosition(ArrayedBinaryTreeIterator280 iter) {
 
-        if (this.count > 1) {
+        if (this.count > 1) { // tree has more than 1 item
 
             if(iter.currentNode > 1) { // not pointing at the root follow algorith.
                 I itemToDelete = this.items[iter.currentNode];
