@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/QuestLog-Template.iml" filepath="$PROJECT_DIR$/QuestLog-Template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Q1/lib280-asn4/lib280-asn4.iml" filepath="$PROJECT_DIR$/../../Q1/lib280-asn4/lib280-asn4.iml" />
     </modules>
   </component>
 </project>
