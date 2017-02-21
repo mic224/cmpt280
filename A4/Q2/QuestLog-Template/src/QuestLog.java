@@ -103,33 +103,9 @@ public class QuestLog extends KeyedChainedHashTable280<String, QuestLogEntry> {
 		// the superclass methods won't be terribly useful unless you can modify them, which you
 		// aren't allowed to do!).
 
-		QuestLogEntry questK = null;
+		QuestLogEntry questK = obtain(k);
 
-
-		String[] keyList = keys();
-
-		for(int i = 0; i < keyList.length; i++) {
-			if(keyList[i] == k) {
-				questK = this.obtain(keyList[i]);
-				return new Pair280<>(questK, i + 1 );
-			}
-		}
-
-		return new Pair280<>(null, keyList.length);
-	}
-
-	public float hashCountAverage() {
-		String[] keyList = keys();
-		Arrays.sort(keyList);
-
-		float c = 0;
-
-		for(int i = 0; i < keyList.length; i++) {
-			c += this.obtainWithCount(keyList[i]).secondItem();
-		}
-
-		c /= keyList.length;
-		return c;
+		return new Pair280<>(questK, 1);
 	}
 	
 	public static void main(String args[])  {
@@ -147,7 +123,7 @@ public class QuestLog extends KeyedChainedHashTable280<String, QuestLogEntry> {
 		try {
 			//NOTE: if you are using ECLIPSE, remove the 'QuestLog/' portion of the
 			//input filename on the next line.
-			inFile = new CSVReader(new FileReader("quests4.csv"));
+			inFile = new CSVReader(new FileReader("quests100000.csv"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Error: File not found.");
 			return;
@@ -182,13 +158,20 @@ public class QuestLog extends KeyedChainedHashTable280<String, QuestLogEntry> {
 		// COMMENT THIS OUT when you're testing the file with 100,000 quests.  It takes way too long.
 	    System.out.println(treeQuestLog.toStringInorder());
 */
-		
+
 
 		// TODO Determine the average number of elements examined during access for hashed quest log.
 	    // (call hashQuestLog.obtainWithCount() for each quest in the log and find average # of access)
-		float hashAverage = hashQuestLog.hashCountAverage();
+		String[] keys = hashQuestLog.keys();
+		float hashAverage = 1;
 
-		System.out.println(hashAverage);
+		for(int i = 0; i < keys.length; i++) {
+			hashAverage += hashQuestLog.obtainWithCount(keys[i]).secondItem();
+		}
+
+		hashAverage /= keys.length;
+		System.out.println("Avg. # of items examined per query in the hashed quest log with " + keys.length +
+				" entries: " + hashAverage);
 
 		// TODO Determine the average number of elements examined during access for lib280.tree quest log.
 	    // (call treeQuestLog.searchCount() for each quest in the log and find average # of access)
@@ -202,7 +185,8 @@ public class QuestLog extends KeyedChainedHashTable280<String, QuestLogEntry> {
 
 		treeAverage = treeAverage/hashQuestLog.count();
 
-		System.out.println(treeAverage);
+		System.out.println("Avg. # of items examined per query in the tree quest log with " + keys.length +
+				" entries: " + treeAverage);
 	}
 	
 }
