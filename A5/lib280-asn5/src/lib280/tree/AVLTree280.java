@@ -26,6 +26,30 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         return;
     }
 
+    @Override
+    protected String toStringByLevel(int i)
+    {
+        return null;
+//        StringBuffer blanks = new StringBuffer((i - 1) * 5);
+//        for (int j = 0; j < i - 1; j++)
+//            blanks.append("     ");
+//
+//        String result = new String();
+//        if (!isEmpty() && (!rootLeftSubtree().isEmpty() || !rootRightSubtree().isEmpty()))
+//            result += rootRightSubtree().toStringByLevel(i+1);
+//
+//        result += "\n" + blanks + i + ": " ;
+//        if (isEmpty())
+//            result += "-";
+//        else
+//        {
+//            result += rootItem();
+//            if (!rootLeftSubtree().isEmpty() || !rootRightSubtree().isEmpty())
+//                result += rootLeftSubtree().toStringByLevel(i+1);
+//        }
+//        return result;
+    }
+
     public static void main(String args[]) {
         AVLTree280<Integer> tree = new AVLTree280<Integer>();
         boolean test = true;
@@ -51,6 +75,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
 
         // inserting the first node for testing should become root item
         tree.insert(42);
+        System.out.println("\nInserting 42");
+        tree.toStringByLevel(1);
 
         if (tree.rootItem() == 42) {
             System.out.println("3: PASS");
@@ -60,6 +86,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
 
         // inserting another item 120 should become right subtree
         tree.insert(120);
+        System.out.println("\nInserting 120");
+        tree.toStringByLevel(1);
 
         if (tree.rootRightSubtree().item() == 120) {
             System.out.println("4: PASS");
@@ -69,6 +97,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
 
         // inserting 2 should be left sub tree
         tree.insert(2);
+        System.out.println("\nInserting 2");
+        tree.toStringByLevel(1);
 
         if (tree.rootLeftSubtree().item() == 2) {
             System.out.println("5: PASS");
@@ -78,6 +108,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
 
         // inserting 4 should be 2's right subtree
         tree.insert(4);
+        System.out.println("\nInserting 4");
+        tree.toStringByLevel(1);
 
         if (tree.has(4)) {
             if (tree.rootLeftSubtree().rootRightSubtree().item() == 4)
@@ -94,6 +126,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         // 4 left subtree should be 2
         // 4 right subtree should be 5
         tree.insert(5);
+        System.out.println("\nInserting 5; Testing LL imbalance and right rotation.");
+        tree.toStringByLevel(1);
 
         if (!tree.has(5))
             test = false;
@@ -118,6 +152,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         // root -> left = 2
         // root -> left -> left = 0
         tree.insert(0);
+        System.out.println("\nInserting 0; Testing LL imbalance and right rotation.");
+        tree.toStringByLevel(1);
 
         test = true;
         if(!tree.has(0))
@@ -160,6 +196,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //      1
         //          0
         tree.insert(1);
+        System.out.println("\nInserting 1; Testing LR imbalance and double right rotation.");
+        tree.toStringByLevel(1);
 
         test = true;
         if(!tree.has(1))
@@ -214,6 +252,9 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         tree.insert(99);
         tree.insert(122);
         tree.insert(84);
+        System.out.println("\nInserting 99, 122, 84; Testing RL imbalance and double left rotation.");
+        tree.toStringByLevel(1);
+
 
         test = true;
         if(!tree.has(99) || !tree.has(122) || !tree.has(84))
@@ -275,6 +316,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //      1
         //          0
         tree.insert(126);
+        System.out.println("\nInserting 126; Testing RR imbalance and left rotation.");
+        tree.toStringByLevel(1);
 
         test = true;
         if(!tree.has(126))
@@ -318,7 +361,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //      1
         //          0
         tree.rootRightSubtree().deleteItem();
-
+        System.out.println("\nDeleting 99.");
+        tree.toStringByLevel(1);
         // before:
         //                  126
         //          122
@@ -345,6 +389,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //      1
         //          0
         tree.rootRightSubtree().rootLeftSubtree().rootLeftSubtree().deleteItem();
+        System.out.println("\nDeleting 5.");
+        tree.toStringByLevel(1);
 
         // before:
         //                  126
@@ -373,6 +419,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //      1
         //          0
         tree.rootRightSubtree().rootLeftSubtree().deleteItem();
+        System.out.println("\nDeleting 42. Triggering an RR imbalance at 84.");
+        tree.toStringByLevel(1);
 
         test = true;
         if(tree.rootRightSubtree().item() != 122)
