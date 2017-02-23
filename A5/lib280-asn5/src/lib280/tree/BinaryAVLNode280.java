@@ -35,6 +35,22 @@ public class BinaryAVLNode280<I extends Comparable<? super I>> extends BinaryNod
         return rightNode;
     }
 
+    public void nullifyNode() {
+        rightNode = null;
+        rightHeight = 0;
+        leftNode = null;
+        leftHeight = 0;
+        setItem(null);
+    }
+
+    public void swapNode(BinaryAVLNode280<I> node) {
+        rightNode = node.rightNode();
+        rightHeight = node.rightHeight();
+        leftNode = node.leftNode();
+        leftHeight = node.leftHeight();
+        item = node.item();
+    }
+
     public int leftHeight() {
         return leftHeight;
     }

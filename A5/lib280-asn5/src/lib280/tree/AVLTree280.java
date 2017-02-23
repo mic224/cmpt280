@@ -25,31 +25,75 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         super(lt, r, rt);
     }
 
-    protected BinaryAVLNode280<I> rightRotation(BinaryAVLNode280<I> root) {
-        return root;
+    protected void rightRotation(BinaryAVLNode280<I> root) {
+        BinaryAVLNode280<I> temp1;
+        BinaryAVLNode280<I> temp2 = root.leftNode();
+
+        if (temp2.leftNode == null) {
+            temp1 = null;
+        } else {
+            temp1 = temp2.rightNode();
+        }
+
+        temp2.setRightNode(root.clone());
+        temp2.rightNode.setLeftNode(temp1);
+        if (temp1 != null) {
+            temp2.rightNode.setLeftHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
+        } else {
+            temp2.rightNode.setLeftHeight(0);
+        }
+
+        if (temp2.rightNode == null) {
+            temp2.setRightHeight(0);
+        } else {
+            temp2.setRightHeight(Math.max(temp2.rightNode.rightHeight, temp2.rightNode.leftHeight) + 1);
+        }
+        if (temp2.leftNode == null) {
+            temp2.setLeftHeight(0);
+        } else {
+            temp2.setLeftHeight(Math.max(temp2.leftNode.rightHeight, temp2.leftNode.leftHeight) + 1);
+        }
+        root.setItem(temp2.item());
+        root.setLeftHeight(temp2.leftHeight());
+        root.setRightHeight(temp2.rightHeight());
+        root.setRightNode(temp2.rightNode());
+        root.setLeftNode(temp2.leftNode());
     }
 
-    protected BinaryAVLNode280<I> leftRotation(BinaryAVLNode280<I> root) {
-        BinaryAVLNode280<I> TN2 = root.rightNode();
-        BinaryAVLNode280<I> TN1;
+    protected void leftRotation(BinaryAVLNode280<I> root) {
+        BinaryAVLNode280<I> temp2 = root.rightNode();
+        BinaryAVLNode280<I> temp1;
 
-        if(TN2.leftNode == null) {
-            TN1 = null;
+        if (temp2.leftNode == null) {
+            temp1 = null;
         } else {
-            TN1 = TN2.leftNode();
+            temp1 = temp2.leftNode();
         }
 
-        TN2.setLeftNode(root.clone());
-        TN2.leftNode.setRightNode(null);
-        TN2.leftNode.rightHeight = 0;
-
-        if(TN2.leftNode == null) {
-            TN2.setLeftHeight(0);
+        temp2.setLeftNode(root.clone());
+        temp2.leftNode.setRightNode(temp1);
+        if (temp1 != null) {
+            temp2.leftNode.setRightHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
         } else {
-            TN2.setLeftHeight(Math.max(TN2.leftNode.leftHeight, TN2.leftNode.rightHeight) + 1);
+            temp2.leftNode.rightHeight = 0;
         }
-        TN2.setRightHeight(Math.max(TN2.rightNode.leftHeight, TN2.rightNode.rightHeight) + 1);
-        return TN2;
+
+        if (temp2.leftNode == null) {
+            temp2.setLeftHeight(0);
+        } else {
+            temp2.setLeftHeight(Math.max(temp2.leftNode.leftHeight, temp2.leftNode.rightHeight) + 1);
+        }
+        if (temp2.rightNode == null) {
+            temp2.setRightHeight(0);
+        } else {
+            temp2.setRightHeight(Math.max(temp2.rightNode.leftHeight, temp2.rightNode.rightHeight) + 1);
+        }
+
+        root.setItem(temp2.item());
+        root.setLeftHeight(temp2.leftHeight());
+        root.setRightHeight(temp2.rightHeight());
+        root.setRightNode(temp2.rightNode());
+        root.setLeftNode(temp2.leftNode());
     }
 
 
@@ -63,23 +107,18 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
                     rightRotation(root);
                 } else {
                     // LR imbalance need left then right rotations.
-                    BinaryAVLNode280<I> temp = leftRotation(root.leftNode());
-                    rightRotation(temp);
+                    leftRotation(root.leftNode());
+                    rightRotation(root);
                 }
             } else {
                 // R imbalance looking at right children.
-                if (root.rightNode().leftHeight() < root.rightNode().rightHeight()) {
+                if (root.rightNode().leftHeight() <= root.rightNode().rightHeight()) {
                     // RR imbalance need left rotation.
-                    BinaryAVLNode280<I> temp = leftRotation(root);
-                    root.setItem(temp.item());
-                    root.setLeftHeight(temp.leftHeight());
-                    root.setRightHeight(temp.rightHeight());
-                    root.setRightNode(temp.rightNode());
-                    root.setLeftNode(temp.leftNode());
+                    leftRotation(root);
                 } else {
                     // RL imbalance need right then left rotation.
-                    BinaryAVLNode280<I> temp = rightRotation(root.rightNode());
-                    leftRotation(temp);
+                    rightRotation(root.rightNode());
+                    leftRotation(root);
                 }
             }
         }
@@ -102,6 +141,60 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             root.setRightHeight(Math.max(root.rightNode().leftHeight(), root.rightNode().rightHeight()) + 1);
         }
         restoreAVLProperty(root);
+    }
+
+    public BinaryAVLNode280<I> inOrderSuccesor(BinaryAVLNode280<I> root) {
+        BinaryAVLNode280<I> temp;
+        if (root == null)
+            return root;
+
+        temp = root.clone().leftNode;
+
+        while (temp.rightNode != null) {
+            temp = temp.rightNode();
+        }
+        return temp;
+
+    }
+
+    public void deleteRecurse(I x, BinaryAVLNode280<I> root) {
+        if (x.compareTo(root.item()) == 0) {
+            if ((root.leftHeight() + root.rightHeight()) <= 1) {
+                if (root.leftHeight() == 1) {
+                    root.swapNode(root.leftNode());
+                } else if (root.rightHeight() == 1) {
+                    root.swapNode(root.rightNode());
+                } else {
+                    root.nullifyNode();
+                }
+
+            } else {
+                BinaryAVLNode280<I> temp = inOrderSuccesor(root);
+                root.setItem(temp.item());
+                deleteRecurse(temp.item(), root.leftNode());
+            }
+        } else {
+            if (x.compareTo(root.item()) <= 0) {
+                deleteRecurse(x, root.leftNode());
+            } else {
+                deleteRecurse(x, root.rightNode());
+            }
+        }
+        updateHeight(root);
+        restoreAVLProperty(root);
+    }
+
+    public void updateHeight(BinaryAVLNode280<I> root) {
+        if ((root.leftNode != null) && (root.leftNode.item != null)) {
+            root.setLeftHeight(Math.max(root.leftNode().leftHeight(), root.leftNode().rightHeight()) + 1);
+        } else {
+            root.setLeftHeight(0);
+        }
+        if ((root.rightNode != null) && (root.rightNode.item != null)) {
+            root.setRightHeight(Math.max(root.rightNode().leftHeight(), root.rightNode().rightHeight()) + 1);
+        } else {
+            root.setRightHeight(0);
+        }
     }
 
     /**
@@ -177,9 +270,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
     }
 
     @Override
-    protected void setRootNode(BinaryNode280<I> newNode)
-    {
-        this.rootNode = (BinaryAVLNode280<I>)newNode;
+    protected void setRootNode(BinaryNode280<I> newNode) {
+        this.rootNode = (BinaryAVLNode280<I>) newNode;
     }
 
     @Override
@@ -237,7 +329,11 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
 
     @Override
     public void deleteItem() throws NoCurrentItem280Exception {
-        return;
+        if (cur.item == null) {
+            throw new NoCurrentItem280Exception("Error: no current item.");
+        } else {
+            deleteRecurse(cur.item(), this.rootNode());
+        }
     }
 
     @Override
@@ -256,7 +352,7 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             result += rootRightSubtree().toStringByLevel(i + 1);
 
         result += "\n" + blanks + i + "= ";
-        if (isEmpty())
+        if (isEmpty() || (this.rootNode().item == null))
             result += "-";
         else {
             result += rootItem() + "(L:" + this.rootNode().leftHeight() + ",R:" + this.rootNode().rightHeight() + ")";
@@ -291,8 +387,9 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
 
         // inserting the first node for testing should become root item
         System.out.println("\nInserting 42");
-        System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        System.out.println("\nTree (before): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
         tree.insert(42);
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         if (tree.rootItem() == 42) {
             System.out.println("3: PASS");
@@ -304,6 +401,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         System.out.println("\nInserting 120");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
         tree.insert(120);
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+
 
         if (tree.rootRightSubtree().rootNode.item() == 120) {
             System.out.println("4: PASS");
@@ -312,9 +411,10 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         }
 
         // inserting 2 should be left sub tree
-        tree.insert(2);
         System.out.println("\nInserting 2");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.insert(2);
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         if (tree.rootLeftSubtree().rootNode.item() == 2) {
             System.out.println("5: PASS");
@@ -326,6 +426,7 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         System.out.println("\nInserting 4");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
         tree.insert(4);
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         if (tree.has(4)) {
             if (tree.rootLeftSubtree().rootRightSubtree().rootNode.item() == 4)
@@ -369,9 +470,11 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         // root -> right -> left = 5
         // root -> left = 2
         // root -> left -> left = 0
-        tree.insert(0);
+
         System.out.println("\nInserting 0; Testing LL imbalance and right rotation.");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.insert(0);
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         test = true;
         if (!tree.has(0))
@@ -388,7 +491,7 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             test = false;
         if (tree.rootLeftSubtree().rootLeftSubtree().rootNode.item() != 0)
             test = false;
-        if (tree.rootLeftSubtree().rootRightSubtree() != null)
+        if (tree.rootLeftSubtree().rootRightSubtree().rootNode != null)
             test = false;
 
         if (test)
@@ -413,9 +516,10 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //          2
         //      1
         //          0
-        tree.insert(1);
         System.out.println("\nInserting 1; Testing LR imbalance and double right rotation.");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.insert(1);
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         test = true;
         if (!tree.has(1))
@@ -434,11 +538,11 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             test = false;
         if (tree.rootLeftSubtree().rootRightSubtree().rootNode.item() != 2)
             test = false;
-        if (tree.rootLeftSubtree().rootLeftSubtree().rootLeftSubtree() != null)
+        if (tree.rootLeftSubtree().rootLeftSubtree().rootLeftSubtree().rootNode != null)
             test = false;
-        if (tree.rootLeftSubtree().rootLeftSubtree().rootRightSubtree() != null)
+        if (tree.rootLeftSubtree().rootLeftSubtree().rootRightSubtree().rootNode != null)
             test = false;
-        if (tree.rootRightSubtree().rootRightSubtree().rootRightSubtree() != null)
+        if (tree.rootRightSubtree().rootRightSubtree().rootRightSubtree().rootNode != null)
             test = false;
 
         if (test)
@@ -467,11 +571,12 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //          2
         //      1
         //          0
+        System.out.println("\nInserting 99, 122, 84; Testing RL imbalance and double left rotation.");
+        System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
         tree.insert(99);
         tree.insert(122);
         tree.insert(84);
-        System.out.println("\nInserting 99, 122, 84; Testing RL imbalance and double left rotation.");
-        System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
 
         test = true;
@@ -491,13 +596,13 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             test = false;
         if (tree.rootLeftSubtree().rootRightSubtree().rootNode.item() != 2)
             test = false;
-        if (tree.rootLeftSubtree().rootLeftSubtree().rootLeftSubtree() != null)
+        if (tree.rootLeftSubtree().rootLeftSubtree().rootLeftSubtree().rootNode != null)
             test = false;
-        if (tree.rootLeftSubtree().rootLeftSubtree().rootRightSubtree() != null)
+        if (tree.rootLeftSubtree().rootLeftSubtree().rootRightSubtree().rootNode != null)
             test = false;
         if (tree.rootRightSubtree().rootRightSubtree().rootRightSubtree().rootNode.item() != 122)
             test = false;
-        if (tree.rootRightSubtree().rootRightSubtree().rootLeftSubtree().rootNode.item() != 84)
+        if (tree.rootRightSubtree().rootLeftSubtree().rootRightSubtree().rootNode.item() != 84)
             test = false;
         if (tree.rootRightSubtree().rootLeftSubtree().rootLeftSubtree().rootNode.item() != 5)
             test = false;
@@ -533,9 +638,11 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //          2
         //      1
         //          0
-        tree.insert(126);
+
         System.out.println("\nInserting 126; Testing RR imbalance and left rotation.");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.insert(126);
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         test = true;
         if (!tree.has(126))
@@ -578,9 +685,16 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //          2
         //      1
         //          0
-        tree.rootRightSubtree().deleteItem();
         System.out.println("\nDeleting 99.");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.search(99);
+        if (tree.itemExists()) {
+            tree.deleteItem();
+        } else {
+            System.out.println("Error: no current item");
+        }
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+
         // before:
         //                  126
         //          122
@@ -606,9 +720,15 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //          2
         //      1
         //          0
-        tree.rootRightSubtree().rootLeftSubtree().rootLeftSubtree().deleteItem();
         System.out.println("\nDeleting 5.");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.search(5);
+        if (tree.itemExists()) {
+            tree.deleteItem();
+        } else {
+            System.out.println("Error: no current item");
+        }
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         // before:
         //                  126
@@ -636,9 +756,15 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         //          2
         //      1
         //          0
-        tree.rootRightSubtree().rootLeftSubtree().deleteItem();
         System.out.println("\nDeleting 42. Triggering an RR imbalance at 84.");
         System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.search(42);
+        if (tree.itemExists()) {
+            tree.deleteItem();
+        } else {
+            System.out.println("Error: no current item");
+        }
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
         test = true;
         if (tree.rootRightSubtree().rootNode.item() != 122)
@@ -649,15 +775,35 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             test = false;
         if (tree.rootRightSubtree().rootLeftSubtree().rootRightSubtree().rootNode.item() != 120)
             test = false;
-        if (tree.rootRightSubtree().rootRightSubtree().rootRightSubtree().rootNode.item() != null)
+        if (tree.rootRightSubtree().rootRightSubtree().rootRightSubtree().rootNode != null)
             test = false;
-        if (tree.rootRightSubtree().rootRightSubtree().rootLeftSubtree().rootNode.item() != null)
+        if (tree.rootRightSubtree().rootRightSubtree().rootLeftSubtree().rootNode != null)
             test = false;
 
         if (test)
             System.out.println("12: PASS");
         else
             System.out.println("12: FAIL");
+
+
+        System.out.println("\nDeleting 0, 2. Triggering an RL imbalance at root.");
+        System.out.println("\nTree: (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+        tree.search(0);
+        if (tree.itemExists()) {
+            tree.deleteItem();
+        } else {
+            System.out.println("Error: no current item");
+        }
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+
+        tree.search(2);
+        if (tree.itemExists()) {
+            tree.deleteItem();
+        } else {
+            System.out.println("Error: no current item");
+        }
+        System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
+
 
         // testing clear
         tree.clear();
