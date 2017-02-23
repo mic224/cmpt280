@@ -38,7 +38,11 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         temp2.setRightNode(root.clone());
         temp2.rightNode.setLeftNode(temp1);
         if (temp1 != null) {
-            temp2.rightNode.setLeftHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
+            if(temp1.item != null) {
+                temp2.rightNode.setLeftHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
+            } else {
+                temp2.rightNode.setLeftHeight(0);
+            }
         } else {
             temp2.rightNode.setLeftHeight(0);
         }
@@ -48,7 +52,7 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         } else {
             temp2.setRightHeight(Math.max(temp2.rightNode.rightHeight, temp2.rightNode.leftHeight) + 1);
         }
-        if (temp2.leftNode == null) {
+        if ((temp2.leftNode == null)) {
             temp2.setLeftHeight(0);
         } else {
             temp2.setLeftHeight(Math.max(temp2.leftNode.rightHeight, temp2.leftNode.leftHeight) + 1);
@@ -73,7 +77,11 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         temp2.setLeftNode(root.clone());
         temp2.leftNode.setRightNode(temp1);
         if (temp1 != null) {
-            temp2.leftNode.setRightHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
+            if(temp1.item != null) {
+                temp2.leftNode.setRightHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
+            } else {
+                temp2.leftNode.rightHeight = 0;
+            }
         } else {
             temp2.leftNode.rightHeight = 0;
         }
@@ -143,7 +151,7 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         restoreAVLProperty(root);
     }
 
-    public BinaryAVLNode280<I> inOrderSuccesor(BinaryAVLNode280<I> root) {
+    public BinaryAVLNode280<I> inOrderSuccessor(BinaryAVLNode280<I> root) {
         BinaryAVLNode280<I> temp;
         if (root == null)
             return root;
@@ -167,9 +175,8 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
                 } else {
                     root.nullifyNode();
                 }
-
             } else {
-                BinaryAVLNode280<I> temp = inOrderSuccesor(root);
+                BinaryAVLNode280<I> temp = inOrderSuccessor(root);
                 root.setItem(temp.item());
                 deleteRecurse(temp.item(), root.leftNode());
             }
