@@ -25,170 +25,107 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         super(lt, r, rt);
     }
 
-    protected void rightRotation(BinaryAVLNode280<I> root) {
-        BinaryAVLNode280<I> temp1;
-        BinaryAVLNode280<I> temp2 = root.leftNode();
-
-        if (temp2.leftNode == null) {
-            temp1 = null;
+    protected void rightRotation(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> current) {
+        if (parent == null) {
+            this.rootNode = current.leftNode;
+            current.setLeftNode(rootNode.rightNode);
+            updateHeight(current);
+            rootNode.setRightNode(current);
+            updateHeight(rootNode());
         } else {
-            temp1 = temp2.rightNode();
-        }
-
-        temp2.setRightNode(root.clone());
-        temp2.rightNode.setLeftNode(temp1);
-        if (temp1 != null) {
-            if(temp1.item != null) {
-                temp2.rightNode.setLeftHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
+            if (current.compareTo(parent) <= 0) {
+                parent.setLeftNode(current.leftNode);
+                parent.leftNode().setRightNode(current);
+                current.leftNode = null;
+                current.setLeftHeight(0);
+                updateHeight(parent.leftNode);
             } else {
-                temp2.rightNode.setLeftHeight(0);
+                parent.setRightNode(current.leftNode);
+                parent.rightNode().setRightNode(current);
+                current.leftNode = null;
+                current.setLeftHeight(0);
+                updateHeight(parent.rightNode);
             }
-        } else {
-            temp2.rightNode.setLeftHeight(0);
+            updateHeight(parent);
         }
-
-        if (temp2.rightNode == null) {
-            temp2.setRightHeight(0);
-        } else {
-            temp2.setRightHeight(Math.max(temp2.rightNode.rightHeight, temp2.rightNode.leftHeight) + 1);
-        }
-        if ((temp2.leftNode == null)) {
-            temp2.setLeftHeight(0);
-        } else {
-            temp2.setLeftHeight(Math.max(temp2.leftNode.rightHeight, temp2.leftNode.leftHeight) + 1);
-        }
-        root.setItem(temp2.item());
-        root.setLeftHeight(temp2.leftHeight());
-        root.setRightHeight(temp2.rightHeight());
-        root.setRightNode(temp2.rightNode());
-        root.setLeftNode(temp2.leftNode());
     }
 
-    protected void leftRotation(BinaryAVLNode280<I> root) {
-        BinaryAVLNode280<I> temp2 = root.rightNode();
-        BinaryAVLNode280<I> temp1;
-
-        if (temp2.leftNode == null) {
-            temp1 = null;
+    protected void leftRotation(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> current) {
+        if (parent == null) {
+            this.rootNode = current.rightNode;
+            current.setRightNode(rootNode.leftNode);
+            updateHeight(current);
+            rootNode.setLeftNode(current);
+            updateHeight(rootNode());
         } else {
-            temp1 = temp2.leftNode();
-        }
-
-        temp2.setLeftNode(root.clone());
-        temp2.leftNode.setRightNode(temp1);
-        if (temp1 != null) {
-            if(temp1.item != null) {
-                temp2.leftNode.setRightHeight(Math.max(temp1.leftHeight, temp1.rightHeight) + 1);
+            if (current.compareTo(parent) <= 0) {
+                parent.setLeftNode(current.rightNode);
+                parent.leftNode().setRightNode(parent.leftNode.rightNode);
+                parent.leftNode().setLeftNode(current);
+                current.rightNode = null;
+                current.setRightHeight(0);
+                updateHeight(parent.leftNode);
             } else {
-                temp2.leftNode.rightHeight = 0;
+                parent.setRightNode(current.rightNode);
+                current.setRightNode(current.rightNode.leftNode);
+                parent.rightNode.setLeftNode(current);
+                updateHeight(current);
+                updateHeight(parent.rightNode);
             }
-        } else {
-            temp2.leftNode.rightHeight = 0;
         }
-
-        if (temp2.leftNode == null) {
-            temp2.setLeftHeight(0);
-        } else {
-            temp2.setLeftHeight(Math.max(temp2.leftNode.leftHeight, temp2.leftNode.rightHeight) + 1);
-        }
-        if (temp2.rightNode == null) {
-            temp2.setRightHeight(0);
-        } else {
-            temp2.setRightHeight(Math.max(temp2.rightNode.leftHeight, temp2.rightNode.rightHeight) + 1);
-        }
-
-        root.setItem(temp2.item());
-        root.setLeftHeight(temp2.leftHeight());
-        root.setRightHeight(temp2.rightHeight());
-        root.setRightNode(temp2.rightNode());
-        root.setLeftNode(temp2.leftNode());
+        updateHeight(parent);
     }
 
 
-    protected void restoreAVLProperty(BinaryAVLNode280<I> root) {
-        if (Math.abs(root.leftHeight() - root.rightHeight()) > 1) {
-            // root node is critically imbalanced.
-            if (root.leftHeight() > root.rightHeight()) {
+    protected void restoreAVLProperty(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> current) {
+        if (Math.abs(current.leftHeight() - current.rightHeight()) > 1) {
+            // current node is critically imbalanced.
+            if (current.leftHeight() > current.rightHeight()) {
                 // L imbalance looking at left children.
-                if (root.leftNode().leftHeight() > root.leftNode().rightHeight()) {
+                if (current.leftNode().leftHeight() > current.leftNode().rightHeight()) {
                     // LL imbalance need right rotation.
-                    rightRotation(root);
+                    rightRotation(parent, current);
+
                 } else {
                     // LR imbalance need left then right rotations.
-                    leftRotation(root.leftNode());
-                    rightRotation(root);
+                    leftRotation(current, current.leftNode());
+                    rightRotation(parent, current);
                 }
             } else {
                 // R imbalance looking at right children.
-                if (root.rightNode().leftHeight() <= root.rightNode().rightHeight()) {
+                if (current.rightNode().leftHeight() <= current.rightNode().rightHeight()) {
                     // RR imbalance need left rotation.
-                    leftRotation(root);
+                    leftRotation(parent, current);
                 } else {
                     // RL imbalance need right then left rotation.
-                    rightRotation(root.rightNode());
-                    leftRotation(root);
+                    rightRotation(current, current.rightNode());
+                    leftRotation(parent, current);
                 }
             }
         }
     }
 
-    protected void insertRecurse(I x, BinaryAVLNode280<I> root) {
-        if (x.compareTo(root.item()) <= 0) {
-            if (root.leftNode() == null) {
-                root.setLeftNode(createNewNode(x));
+    protected void insertRecurse(I x, BinaryAVLNode280<I> parent, BinaryAVLNode280<I> current) {
+        if (x.compareTo(current.item()) <= 0) {
+            if (current.leftNode == null) {
+                current.setLeftNode(createNewNode(x));
+                current.setLeftHeight(1);
             } else {
-                insertRecurse(x, root.leftNode());
+                insertRecurse(x, current, current.leftNode());
             }
-            root.setLeftHeight(Math.max(root.leftNode().leftHeight(), root.leftNode().rightHeight()) + 1);
+
         } else {
-            if (root.rightNode() == null) {
-                root.setRightNode(createNewNode(x));
+            if (current.rightNode == null) {
+                current.setRightNode(createNewNode(x));
+                current.setRightHeight(1);
             } else {
-                insertRecurse(x, root.rightNode());
+                insertRecurse(x, current, current.rightNode());
             }
-            root.setRightHeight(Math.max(root.rightNode().leftHeight(), root.rightNode().rightHeight()) + 1);
+
         }
-        restoreAVLProperty(root);
-    }
-
-    public BinaryAVLNode280<I> inOrderSuccessor(BinaryAVLNode280<I> root) {
-        BinaryAVLNode280<I> temp;
-        if (root == null)
-            return root;
-
-        temp = root.clone().leftNode;
-
-        while (temp.rightNode != null) {
-            temp = temp.rightNode();
-        }
-        return temp;
-
-    }
-
-    public void deleteRecurse(I x, BinaryAVLNode280<I> root) {
-        if (x.compareTo(root.item()) == 0) {
-            if ((root.leftHeight() + root.rightHeight()) <= 1) {
-                if (root.leftHeight() == 1) {
-                    root.swapNode(root.leftNode());
-                } else if (root.rightHeight() == 1) {
-                    root.swapNode(root.rightNode());
-                } else {
-                    root.nullifyNode();
-                }
-            } else {
-                BinaryAVLNode280<I> temp = inOrderSuccessor(root);
-                root.setItem(temp.item());
-                deleteRecurse(temp.item(), root.leftNode());
-            }
-        } else {
-            if (x.compareTo(root.item()) <= 0) {
-                deleteRecurse(x, root.leftNode());
-            } else {
-                deleteRecurse(x, root.rightNode());
-            }
-        }
-        updateHeight(root);
-        restoreAVLProperty(root);
+        updateHeight(parent);
+        updateHeight(current);
+        restoreAVLProperty(parent, current);
     }
 
     public void updateHeight(BinaryAVLNode280<I> root) {
@@ -203,6 +140,13 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             root.setRightHeight(0);
         }
     }
+//    public BinaryAVLNode280<I> inOrderSuccessor(BinaryAVLNode280<I> root) {
+//
+//    }
+
+    public void deleteRecurse(I x, BinaryAVLNode280<I> root) {
+
+    }
 
     /**
      * Insert x into the lib280.tree. <br>
@@ -210,9 +154,27 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
      */
     public void insert(I x) {
         if (this.isEmpty()) {
-            setRootNode(createNewNode(x));
+            this.setRootNode(createNewNode(x));
         } else {
-            insertRecurse(x, this.rootNode());
+            if (x.compareTo(rootItem()) <= 0) {
+                if (rootNode().leftNode == null) {
+                    rootNode().setLeftNode(createNewNode(x));
+                    rootNode.setLeftHeight(1);
+                } else {
+                    insertRecurse(x, rootNode(), rootNode().leftNode);
+                }
+            } else {
+                if (rootNode().rightNode == null) {
+                    rootNode().setRightNode(createNewNode(x));
+                    rootNode.setRightHeight(1);
+                } else {
+                    insertRecurse(x, rootNode(), rootNode().rightNode);
+                }
+            }
+
+            if (rootNode().getImbalance() > 1) {
+                restoreAVLProperty(null, rootNode());
+            }
         }
 
     }

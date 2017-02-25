@@ -63,6 +63,13 @@ public class BinaryAVLNode280<I extends Comparable<? super I>> extends BinaryNod
         leftHeight = x;
     }
 
+    public int getImbalance() {
+        return Math.abs(leftHeight-rightHeight);
+    }
+
+    public int getMaxHeight() {
+        return Math.max(leftHeight,rightHeight) + 1;
+    }
     /**
      * Set the left child of this node
      * @param n The new left child of this node.

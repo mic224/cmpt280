@@ -11,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/lib280-asn5$AVLTree280.coverage" NAME="AVLTree280 Coverage Results" MODIFIED="1487883280179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/lib280-asn5$AVLTree280.coverage" NAME="AVLTree280 Coverage Results" MODIFIED="1488054170051" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>lib280.tree.*</FILTER>
     </SUITE>
   </component>
@@ -24,7 +24,7 @@
       <file leaf-file-name="LinkedSimpleTree280.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lib280/tree/LinkedSimpleTree280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="17">
               <caret line="168" column="0" lean-forward="false" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
               <folding>
                 <element signature="e#4714#4715#0" expanded="true" />
@@ -36,13 +36,12 @@
       <file leaf-file-name="AVLTree280.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lib280/tree/AVLTree280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2278">
-              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="311">
+              <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10571#10572#0" expanded="true" />
-                <element signature="e#10607#10608#0" expanded="true" />
-                <element signature="e#11915#11924#0" expanded="true" />
+                <element signature="e#9692#9693#0" expanded="true" />
+                <element signature="e#9728#9729#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -51,20 +50,18 @@
       <file leaf-file-name="BinaryAVLNode280.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lib280/tree/BinaryAVLNode280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+            <state relative-caret-position="167">
+              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
                 <element signature="e#407#408#0" expanded="true" />
                 <element signature="e#433#434#0" expanded="true" />
                 <element signature="e#546#547#0" expanded="true" />
                 <element signature="e#577#578#0" expanded="true" />
-                <element signature="e#627#628#0" expanded="true" />
                 <element signature="e#659#660#0" expanded="true" />
-                <element signature="e#1096#1097#0" expanded="true" />
-                <element signature="e#1129#1130#0" expanded="true" />
-                <element signature="e#1420#1421#0" expanded="true" />
-                <element signature="e#1963#1964#0" expanded="true" />
-                <element signature="e#2020#2021#0" expanded="true" />
+                <element signature="e#1298#1299#0" expanded="true" />
+                <element signature="e#1353#1354#0" expanded="true" />
+                <element signature="e#1386#1387#0" expanded="true" />
+                <element signature="e#1445#1446#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -73,10 +70,25 @@
       <file leaf-file-name="BinaryNode280.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lib280/tree/BinaryNode280.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-442">
+            <state relative-caret-position="391">
               <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding>
-                <element signature="e#554#555#0" expanded="true" />
+                <element signature="e#366#367#0" expanded="false" />
+                <element signature="e#407#408#0" expanded="false" />
+                <element signature="e#650#651#0" expanded="false" />
+                <element signature="e#668#669#0" expanded="false" />
+                <element signature="e#756#757#0" expanded="false" />
+                <element signature="e#778#779#0" expanded="false" />
+                <element signature="e#868#869#0" expanded="false" />
+                <element signature="e#891#892#0" expanded="false" />
+                <element signature="e#1047#1048#0" expanded="false" />
+                <element signature="e#1067#1068#0" expanded="false" />
+                <element signature="e#1208#1209#0" expanded="false" />
+                <element signature="e#1232#1233#0" expanded="false" />
+                <element signature="e#1377#1378#0" expanded="false" />
+                <element signature="e#1402#1403#0" expanded="false" />
+                <element signature="e#1517#1518#0" expanded="false" />
+                <element signature="e#1551#1552#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -111,6 +123,9 @@
       <find>tree.insert</find>
       <find>TN1</find>
       <find>leftHeight</find>
+      <find>root</find>
+      <find>current</find>
+      <find>height</find>
     </findStrings>
     <replaceStrings>
       <replace>System.out.println(tree.toStringByLevel(1));</replace>
@@ -122,6 +137,9 @@
       <replace>this.rootNode</replace>
       <replace>temp2</replace>
       <replace>temp1</replace>
+      <replace>current.</replace>
+      <replace>current</replace>
+      <replace>parent</replace>
     </replaceStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -158,7 +176,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -327,8 +344,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -584,7 +602,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1745" y="24" width="1215" height="1000" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -595,7 +613,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35091496" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40043056" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921812" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -625,21 +643,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/lib280/tree/AVLTree280.java</url>
-          <line>155</line>
+          <line>546</line>
           <properties />
-          <option name="timeStamp" value="385" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/lib280/tree/AVLTree280.java</url>
-          <line>175</line>
-          <properties />
-          <option name="timeStamp" value="386" />
+          <option name="timeStamp" value="447" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="387" />
+      <option name="time" value="457" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -729,7 +741,22 @@
         <state relative-caret-position="442">
           <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
-            <element signature="e#554#555#0" expanded="true" />
+            <element signature="e#366#367#0" expanded="false" />
+            <element signature="e#407#408#0" expanded="false" />
+            <element signature="e#650#651#0" expanded="false" />
+            <element signature="e#668#669#0" expanded="false" />
+            <element signature="e#756#757#0" expanded="false" />
+            <element signature="e#778#779#0" expanded="false" />
+            <element signature="e#868#869#0" expanded="false" />
+            <element signature="e#891#892#0" expanded="false" />
+            <element signature="e#1047#1048#0" expanded="false" />
+            <element signature="e#1067#1068#0" expanded="false" />
+            <element signature="e#1208#1209#0" expanded="false" />
+            <element signature="e#1232#1233#0" expanded="false" />
+            <element signature="e#1377#1378#0" expanded="false" />
+            <element signature="e#1402#1403#0" expanded="false" />
+            <element signature="e#1517#1518#0" expanded="false" />
+            <element signature="e#1551#1552#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -743,13 +770,11 @@
             <element signature="e#433#434#0" expanded="true" />
             <element signature="e#546#547#0" expanded="true" />
             <element signature="e#577#578#0" expanded="true" />
-            <element signature="e#627#628#0" expanded="true" />
             <element signature="e#659#660#0" expanded="true" />
-            <element signature="e#1096#1097#0" expanded="true" />
-            <element signature="e#1129#1130#0" expanded="true" />
-            <element signature="e#1420#1421#0" expanded="true" />
-            <element signature="e#1963#1964#0" expanded="true" />
-            <element signature="e#2020#2021#0" expanded="true" />
+            <element signature="e#1298#1299#0" expanded="true" />
+            <element signature="e#1353#1354#0" expanded="true" />
+            <element signature="e#1386#1387#0" expanded="true" />
+            <element signature="e#1445#1446#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -760,9 +785,8 @@
           <caret line="309" column="0" lean-forward="true" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10571#10572#0" expanded="true" />
-            <element signature="e#10607#10608#0" expanded="true" />
-            <element signature="e#11915#11924#0" expanded="true" />
+            <element signature="e#9692#9693#0" expanded="true" />
+            <element signature="e#9728#9729#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -803,9 +827,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10571#10572#0" expanded="true" />
-            <element signature="e#10607#10608#0" expanded="true" />
-            <element signature="e#11915#11924#0" expanded="true" />
+            <element signature="e#9692#9693#0" expanded="true" />
+            <element signature="e#9728#9729#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -836,9 +859,8 @@
           <caret line="5" column="4" lean-forward="false" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10571#10572#0" expanded="true" />
-            <element signature="e#10607#10608#0" expanded="true" />
-            <element signature="e#11915#11924#0" expanded="true" />
+            <element signature="e#9692#9693#0" expanded="true" />
+            <element signature="e#9728#9729#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1044,16 +1066,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib280/tree/LinkedSimpleTree280.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="168" column="0" lean-forward="false" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
-          <folding>
-            <element signature="e#4714#4715#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lib280/tree/OrderedSimpleTree280.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-547">
@@ -1066,43 +1078,65 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib280/tree/BinaryNode280.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-442">
+        <state relative-caret-position="391">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="e#554#555#0" expanded="true" />
+            <element signature="e#366#367#0" expanded="false" />
+            <element signature="e#407#408#0" expanded="false" />
+            <element signature="e#650#651#0" expanded="false" />
+            <element signature="e#668#669#0" expanded="false" />
+            <element signature="e#756#757#0" expanded="false" />
+            <element signature="e#778#779#0" expanded="false" />
+            <element signature="e#868#869#0" expanded="false" />
+            <element signature="e#891#892#0" expanded="false" />
+            <element signature="e#1047#1048#0" expanded="false" />
+            <element signature="e#1067#1068#0" expanded="false" />
+            <element signature="e#1208#1209#0" expanded="false" />
+            <element signature="e#1232#1233#0" expanded="false" />
+            <element signature="e#1377#1378#0" expanded="false" />
+            <element signature="e#1402#1403#0" expanded="false" />
+            <element signature="e#1517#1518#0" expanded="false" />
+            <element signature="e#1551#1552#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib280/tree/LinkedSimpleTree280.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="168" column="0" lean-forward="false" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+          <folding>
+            <element signature="e#4714#4715#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib280/tree/BinaryAVLNode280.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        <state relative-caret-position="167">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
             <element signature="e#407#408#0" expanded="true" />
             <element signature="e#433#434#0" expanded="true" />
             <element signature="e#546#547#0" expanded="true" />
             <element signature="e#577#578#0" expanded="true" />
-            <element signature="e#627#628#0" expanded="true" />
             <element signature="e#659#660#0" expanded="true" />
-            <element signature="e#1096#1097#0" expanded="true" />
-            <element signature="e#1129#1130#0" expanded="true" />
-            <element signature="e#1420#1421#0" expanded="true" />
-            <element signature="e#1963#1964#0" expanded="true" />
-            <element signature="e#2020#2021#0" expanded="true" />
+            <element signature="e#1298#1299#0" expanded="true" />
+            <element signature="e#1353#1354#0" expanded="true" />
+            <element signature="e#1386#1387#0" expanded="true" />
+            <element signature="e#1445#1446#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib280/tree/AVLTree280.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2278">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="311">
+          <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10571#10572#0" expanded="true" />
-            <element signature="e#10607#10608#0" expanded="true" />
-            <element signature="e#11915#11924#0" expanded="true" />
+            <element signature="e#9692#9693#0" expanded="true" />
+            <element signature="e#9728#9729#0" expanded="true" />
           </folding>
         </state>
       </provider>
