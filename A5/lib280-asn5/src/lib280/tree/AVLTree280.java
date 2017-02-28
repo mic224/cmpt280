@@ -528,6 +528,7 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         AVLTree280<Integer> tree = new AVLTree280<Integer>();
         boolean test = true;
 
+        System.out.println("Testing construction of tree.");
         // making sure tree is empty
         if (tree.isEmpty()) {
             System.out.println("1: PASS");
@@ -535,6 +536,7 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             System.out.println("1: FAIL");
         }
 
+        System.out.println("Testing if root node is null.");
         // making sure constructor set root null
         try {
             test = (tree.rootItem() == null);
