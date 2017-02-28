@@ -1,3 +1,12 @@
+// Assignment #5
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
 package lib280.tree;
 
 public class BinaryAVLNode280<I extends Comparable<? super I>> extends BinaryNode280<I> implements Cloneable
