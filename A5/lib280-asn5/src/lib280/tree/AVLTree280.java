@@ -980,6 +980,19 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             System.out.println("PASS");
         else
             System.out.println("FAIL");
+
+        System.out.println("Testing insertion of 10000 items randomly between 0 and 200.");
+        try {
+            for (int i = 0; i < 10000; i++) {
+                int t = (int) (Math.random() * 200);
+                if (!tree.has(t)) {
+                    tree.insert(t);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("FAIL :" + e.toString());
+        }
+        System.out.println("PASS");
     }
 }
 
