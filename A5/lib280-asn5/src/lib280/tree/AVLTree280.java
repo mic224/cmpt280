@@ -1,6 +1,7 @@
 package lib280.tree;
 
 import lib280.exception.ContainerEmpty280Exception;
+import lib280.exception.DuplicateItems280Exception;
 import lib280.exception.NoCurrentItem280Exception;
 
 public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTree280<I> {
@@ -21,62 +22,88 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         this.rootNode = null;
     }
 
-    public AVLTree280(AVLTree280<I> lt, I r, AVLTree280<I> rt) {
-        super(lt, r, rt);
-    }
-
-    protected void rightRotation(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> current) {
+    /**
+     * Performs a right rotation at the given node(child) and updates the parents references and
+     * the heights of both parent and child
+     * the tree.
+     * Analysis: Time = O(1)
+     * @param parent BinaryAVLNode280 the parent node.
+     * @param child BinaryAVLNode 280 the child of parent.
+     */
+    protected void rightRotation(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) {
         if (parent == null) {
-            this.rootNode = current.leftNode;
-            current.setLeftNode(rootNode.rightNode);
-            updateHeight(current);
-            rootNode.setRightNode(current);
+            // special case
+            this.rootNode = child.leftNode;
+            child.setLeftNode(rootNode.rightNode);
+            updateHeight(child);
+            rootNode.setRightNode(child);
             updateHeight(rootNode());
         } else {
-            if (current.compareTo(parent) <= 0) {
-                parent.setLeftNode(current.leftNode);
-                parent.leftNode().setRightNode(current);
-                current.leftNode = null;
-                current.setLeftHeight(0);
+            // check whether node is right or left child of parent
+            if (child == parent.leftNode) {
+                // node is left child perform rotations
+                parent.setLeftNode(child.leftNode);
+                parent.leftNode().setRightNode(child);
+                child.leftNode = null;
+                child.setLeftHeight(0);
                 updateHeight(parent.leftNode);
             } else {
+                // ndoe is right child performing rotations
                 parent.setRightNode(parent.rightNode.leftNode);
-                current.setLeftNode(current.leftNode.rightNode);
-                parent.rightNode().setRightNode(current);
-                current.setLeftHeight(0);
+                child.setLeftNode(child.leftNode.rightNode);
+                parent.rightNode().setRightNode(child);
+                child.setLeftHeight(0);
                 updateHeight(parent.rightNode);
             }
             updateHeight(parent);
         }
     }
 
-    protected void leftRotation(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> current) {
+    /**
+     * Performs a leftRotation at the given node(child) and updates the parents references and
+     * the heights of both parent and child
+     * the tree.
+     * Analysis: Time = O(1)
+     * @param parent BinaryAVLNode280 the parent node.
+     * @param child BinaryAVLNode 280 the child of parent.
+     */
+    protected void leftRotation(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) {
         if (parent == null) {
-            this.rootNode = current.rightNode;
-            current.setRightNode(rootNode.leftNode);
-            updateHeight(current);
-            rootNode.setLeftNode(current);
+            // special case
+            this.rootNode = child.rightNode;
+            child.setRightNode(rootNode.leftNode);
+            updateHeight(child);
+            rootNode.setLeftNode(child);
             updateHeight(rootNode());
         } else {
-            if (current.compareTo(parent) <= 0) {
-                parent.setLeftNode(current.rightNode);
+            // check whether child is left or right child of parent
+            if (child == parent.leftNode) {
+                // is the left child of parent performing rotations
+                parent.setLeftNode(child.rightNode);
                 parent.leftNode().setRightNode(parent.leftNode.rightNode);
-                parent.leftNode().setLeftNode(current);
-                current.rightNode = null;
-                current.setRightHeight(0);
+                parent.leftNode().setLeftNode(child);
+                child.rightNode = null;
+                child.setRightHeight(0);
                 updateHeight(parent.leftNode);
             } else {
-                parent.setRightNode(current.rightNode);
-                current.setRightNode(current.rightNode.leftNode);
-                parent.rightNode.setLeftNode(current);
-                updateHeight(current);
+                // is the right child of parent performing rotations
+                parent.setRightNode(child.rightNode);
+                child.setRightNode(child.rightNode.leftNode);
+                parent.rightNode.setLeftNode(child);
+                updateHeight(child);
                 updateHeight(parent.rightNode);
             }
             updateHeight(parent);
         }
     }
 
-
+    /**
+     * Method to check for imbalance and call the appropriate rotation to restore balance to
+     * the tree.
+     * Analysis: Time = O(1)
+     * @param parent BinaryAVLNode280 the parent node.
+     * @param child BinaryAVLNode 280 the child of parent.
+     */
     protected void restoreAVLProperty(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) {
         if (child.getImbalance() > 1) {
             // child node is critically imbalanced.
@@ -104,57 +131,133 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
             }
         }
     }
-
-    protected void insertRecurse(I x, BinaryAVLNode280<I> parent, BinaryAVLNode280<I> current) {
-        if (x.compareTo(current.item()) <= 0) {
-            if (current.leftNode == null) {
-                current.setLeftNode(createNewNode(x));
-                current.setLeftHeight(1);
+    /**
+     * Recursively searches the tree to find the spot the item belongs, then inserts, updates
+     * heights and rebalances.
+     * Analysis: Time = O(log n)
+     * @param x item of type I to be deleted from the tree.
+     * @param parent BinaryAVLNode280 the parent node.
+     * @param child BinaryAVLNode 280 the child of parent.
+     */
+    protected void insertRecurse(I x, BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) throws DuplicateItems280Exception {
+        // first checking which side of the tree the item needs to go
+        if (x.compareTo(child.item()) < 0) {
+            // the item needs to go on the left side. look for a leaf.
+            if (child.leftNode == null) {
+                // found a leaf node to insert the item to
+                child.setLeftNode(createNewNode(x));
+                child.setLeftHeight(1);
             } else {
-                insertRecurse(x, current, current.leftNode());
+                // keep looking for a leaf node
+                insertRecurse(x, child, child.leftNode());
+            }
+
+        } else if (x.compareTo(child.item()) > 0) {
+            // the item needs to go on the right side. look for a leaf.
+            if (child.rightNode == null) {
+                // found a leaf node to insert to.
+                child.setRightNode(createNewNode(x));
+                child.setRightHeight(1);
+            } else {
+                // keep looking for a leaf.
+                insertRecurse(x, child, child.rightNode());
             }
 
         } else {
-            if (current.rightNode == null) {
-                current.setRightNode(createNewNode(x));
-                current.setRightHeight(1);
-            } else {
-                insertRecurse(x, current, current.rightNode());
-            }
-
+            throw new DuplicateItems280Exception("The item is already in the tree.");
         }
+        //update the heights of each node and rebalance the tree if needed.
         updateHeight(parent);
-        updateHeight(current);
-        restoreAVLProperty(parent, current);
+        updateHeight(child);
+        restoreAVLProperty(parent, child);
     }
 
-    public void updateHeight(BinaryAVLNode280<I> root) {
-        if ((root.leftNode != null) && (root.leftNode.item != null)) {
-            root.setLeftHeight(Math.max(root.leftNode().leftHeight(), root.leftNode().rightHeight()) + 1);
+    /**
+     * Function to start the recursive insertion.
+     * Analysis: Time = O(log n)
+     * @param x item of type I to be inserted into the tree.
+     */
+    public void insert(I x) throws DuplicateItems280Exception {
+        if (this.isEmpty()) {
+            // special case the tree is empty simply insert to root.
+            this.setRootNode(createNewNode(x));
         } else {
-            root.setLeftHeight(0);
+            // non empty check which side the item needs to be inserted to.
+            if (x.compareTo(rootItem()) < 0) {
+                //the item needs to go left.
+                if (rootNode().leftNode == null) {
+                    // rootnode has no left child so simply set the item to rootnode left.
+                    rootNode().setLeftNode(createNewNode(x));
+                    rootNode.setLeftHeight(1);
+                } else {
+                    // start the recursion on the left side of the tree to find where to insert.
+                    insertRecurse(x, rootNode(), rootNode().leftNode);
+                }
+            } else if(x.compareTo(rootItem()) > 0) {
+                // the item needs to go right
+                if (rootNode().rightNode == null) {
+                    // rootnode has no right child set item rootnode right
+                    rootNode().setRightNode(createNewNode(x));
+                    rootNode.setRightHeight(1);
+                } else {
+                    // start the recursion on the right side of the tree.
+                    insertRecurse(x, rootNode(), rootNode().rightNode);
+                }
+            } else {
+                throw new DuplicateItems280Exception("Item is alreayd in the tree.");
+            }
+
+            if (rootNode().getImbalance() > 1) {
+                // rebalance the root if needed.
+                restoreAVLProperty(null, rootNode());
+            }
         }
-        if ((root.rightNode != null) && (root.rightNode.item != null)) {
-            root.setRightHeight(Math.max(root.rightNode().leftHeight(), root.rightNode().rightHeight()) + 1);
+
+    }
+
+    /**
+     * Method to present and start the recursive deletion. Also updates the rootNode height and
+     * checks the root for imbalance and rebalances if necessary.
+     * Analysis: Time = O(log n)
+     */
+    public void deleteItem() throws NoCurrentItem280Exception {
+        if (cur.item == null) {
+            throw new NoCurrentItem280Exception("Error: no current item.");
         } else {
-            root.setRightHeight(0);
+            if (cur.item.compareTo(this.rootNode.item) < 0) {
+                //check if there is a left side of the tree
+                deleteRecurse(cur.item, rootNode, rootNode.leftNode);
+            } else if (cur.item.compareTo(this.rootNode.item) > 0) {
+                // recurse right side of tree
+                deleteRecurse(cur.item, rootNode, rootNode.rightNode);
+            } else {
+                // Item to be deleted is at the root of the tree
+                if (rootNode.getMaxHeight() <= 1) {
+                    // check if rootNode is the only item left
+                    // in this case just make rootNode null to clear tree.
+                    this.rootNode = null;
+                } else {
+                    // special case, deleting root node which has subtrees
+                    deleteRecurse(cur.item, rootNode, null);
+                }
+            }
+            // restore rootNode balance if needed
+            if (rootNode.getImbalance() > 1) {
+                restoreAVLProperty(null, rootNode);
+            }
         }
     }
 
-    public BinaryAVLNode280<I> inOrderSuccessor(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) {
-        if(child.rightNode == null) {
-            // found the inorder successor updating parent rightnode to be null
-            // updating heights also
-            parent.setRightNode(null);
-            updateHeight(parent);
-            updateHeight(child);
-            return child;
-        } else {
-            return inOrderSuccessor(child, child.rightNode);
-        }
-    }
-
-    public void deleteRecurse(I x, BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) {
+    /**
+     * Recursively searches a tree for the item to delete then deletes the item in the AVLTree
+     * fashion, updates the heights of parent and child then calls restoreAVLProperty to
+     * rebalance the tree.
+     * Analysis: Time = O(log n)
+     * @param x item of type I to be deleted from the tree.
+     * @param parent BinaryAVLNode280 the parent node.
+     * @param child BinaryAVLNode 280 the child of parent.
+     */
+    protected void deleteRecurse(I x, BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) {
         BinaryAVLNode280<I> temp; // variable to store inorder successor item.
         if (child != null) {
             // now follow recursive deletion algorithm given in class.
@@ -230,64 +333,43 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         restoreAVLProperty(parent,child);
     }
 
-    @Override
-    public void deleteItem() throws NoCurrentItem280Exception {
-        if (cur.item == null) {
-            throw new NoCurrentItem280Exception("Error: no current item.");
+    /**
+     * Updates the height of a node after a rotation based on its children.
+     * Analysis: Time = O(1)
+     * @param root BinaryAVLNode280 the node to update the height of.
+     */
+    protected void updateHeight(BinaryAVLNode280<I> root) {
+        if ((root.leftNode != null) && (root.leftNode.item != null)) {
+            root.setLeftHeight(Math.max(root.leftNode().leftHeight(), root.leftNode().rightHeight()) + 1);
         } else {
-            if (cur.item.compareTo(this.rootNode.item) < 0) {
-                //check if there is a left side of the tree
-                deleteRecurse(cur.item, rootNode, rootNode.leftNode);
-            } else if (cur.item.compareTo(this.rootNode.item) > 0) {
-                // recurse right side of tree
-                deleteRecurse(cur.item, rootNode, rootNode.rightNode);
-            } else {
-                // Item to be deleted is at the root of the tree
-                if (rootNode.getMaxHeight() <= 1) {
-                    // check if rootNode is the only item left
-                    // in this case just make rootNode null to clear tree.
-                    this.rootNode = null;
-                } else {
-                    // special case, deleting root node which has subtrees
-                    deleteRecurse(cur.item, rootNode, null);
-                }
-            }
-            // restore rootNode balance if needed
-            if (rootNode.getImbalance() > 1) {
-                restoreAVLProperty(null, rootNode);
-            }
+            root.setLeftHeight(0);
+        }
+        if ((root.rightNode != null) && (root.rightNode.item != null)) {
+            root.setRightHeight(Math.max(root.rightNode().leftHeight(), root.rightNode().rightHeight()) + 1);
+        } else {
+            root.setRightHeight(0);
         }
     }
 
     /**
-     * Insert x into the lib280.tree. <br>
-     * Analysis : Time = O(log n) worst case, where n = number of nodes in the lib280.tree
+     * Recursively obtain the in order successor item of a node then
+     * deletes the parents reference to it.
+     * Analysis: Time = O(log n)
+     * @param parent BinaryAVLNode280 which is the parent node of child.
+     * @param child BinaryAVLNode280 the child of parent
+     * @return The in order successor item of a node.
      */
-    public void insert(I x) {
-        if (this.isEmpty()) {
-            this.setRootNode(createNewNode(x));
+    protected BinaryAVLNode280<I> inOrderSuccessor(BinaryAVLNode280<I> parent, BinaryAVLNode280<I> child) {
+        if(child.rightNode == null) {
+            // found the inorder successor updating parent rightnode to be null
+            // updating heights also
+            parent.setRightNode(null);
+            updateHeight(parent);
+            updateHeight(child);
+            return child;
         } else {
-            if (x.compareTo(rootItem()) <= 0) {
-                if (rootNode().leftNode == null) {
-                    rootNode().setLeftNode(createNewNode(x));
-                    rootNode.setLeftHeight(1);
-                } else {
-                    insertRecurse(x, rootNode(), rootNode().leftNode);
-                }
-            } else {
-                if (rootNode().rightNode == null) {
-                    rootNode().setRightNode(createNewNode(x));
-                    rootNode.setRightHeight(1);
-                } else {
-                    insertRecurse(x, rootNode(), rootNode().rightNode);
-                }
-            }
-
-            if (rootNode().getImbalance() > 1) {
-                restoreAVLProperty(null, rootNode());
-            }
+            return inOrderSuccessor(child, child.rightNode);
         }
-
     }
 
     @Override
@@ -875,10 +957,18 @@ public class AVLTree280<I extends Comparable<? super I>> extends OrderedSimpleTr
         }
         System.out.println("\nTree (after): (level= item(left height, right height)) " + tree.toStringByLevel(1) + "\n");
 
+        boolean temp = false;
+        System.out.println("\nTesting insertion of a duplicate item");
+        try{
+            tree.insert(120);
+        } catch( DuplicateItems280Exception e) {
+            temp = true;
+        }
 
-        // testing clear
-        tree.clear();
-
+        if(temp)
+            System.out.println("PASS");
+        else
+            System.out.println("FAIL");
     }
 }
 

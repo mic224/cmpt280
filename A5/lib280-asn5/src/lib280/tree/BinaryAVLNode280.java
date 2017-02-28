@@ -1,20 +1,19 @@
 package lib280.tree;
 
-/**
- * Created by michael on 21/02/17.
- */
 public class BinaryAVLNode280<I extends Comparable<? super I>> extends BinaryNode280<I> implements Cloneable
 {
-
+    /** The height of the left subtree */
     protected int leftHeight;
+    /** The height of the right subtree */
     protected int rightHeight;
+
     /** The left node. */
     protected BinaryAVLNode280<I> leftNode;
 
     /** The right node. */
     protected BinaryAVLNode280<I> rightNode;
 
-
+    /** get the data stored in the node */
     public I item()
     {
        return item;
@@ -35,22 +34,6 @@ public class BinaryAVLNode280<I extends Comparable<? super I>> extends BinaryNod
         return rightNode;
     }
 
-    public void nullifyNode() {
-        rightNode = null;
-        rightHeight = 0;
-        leftNode = null;
-        leftHeight = 0;
-        setItem(null);
-    }
-
-    public void swapNode(BinaryAVLNode280<I> node) {
-        rightNode = node.rightNode();
-        rightHeight = node.rightHeight();
-        leftNode = node.leftNode();
-        leftHeight = node.leftHeight();
-        item = node.item();
-    }
-
     public int leftHeight() {
         return leftHeight;
     }
@@ -63,10 +46,12 @@ public class BinaryAVLNode280<I extends Comparable<? super I>> extends BinaryNod
         leftHeight = x;
     }
 
+    /** return the imbalance of the tree based on its childrens heights */
     public int getImbalance() {
         return Math.abs(leftHeight-rightHeight);
     }
 
+    /** returns the height of the current node */
     public int getMaxHeight() {
         return Math.max(leftHeight,rightHeight) + 1;
     }
