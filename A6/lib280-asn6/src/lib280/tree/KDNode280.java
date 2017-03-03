@@ -1,5 +1,5 @@
 package lib280.tree;
 
-public class KDTree280 {
+public class KDNode280 {
 
 }
