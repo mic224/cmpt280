@@ -5,7 +5,14 @@ import lib280.exception.DuplicateItems280Exception;
 import lib280.exception.ItemNotFound280Exception;
 
 public class KDTree280<I extends Comparable<? super I>> {
-    
+
+    /**
+     * Construct an empty KDTree280, just for testing purposes.
+     */
+    public KDTree280() {
+
+    }
+
     /**
      * Construct a KDTree from an array of KDPoints.
      * @param pointArray Array of KD points to build the tree from.
