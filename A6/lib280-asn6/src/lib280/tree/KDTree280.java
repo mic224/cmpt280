@@ -62,7 +62,7 @@ public class KDTree280<I extends Comparable<? super I>> {
     public static void main(String[] args) {
 
         // first testing partition method
-        System.out.println("Testing partition method with non-unique items.");
+        System.out.println("\nTesting partition method with non-unique items.");
 
         // data for the array of points
         double[][] dList = new double[][] {
@@ -113,7 +113,7 @@ public class KDTree280<I extends Comparable<? super I>> {
         }
         tree = new KDTree280();
 
-        System.out.println("Testing partition() on 1st dimension of unique array: ");
+        System.out.println("\nTesting partition() on 1st dimension of unique array: ");
 
         testing = true;
         try {
@@ -160,7 +160,7 @@ public class KDTree280<I extends Comparable<? super I>> {
 
         // testing partition on a few elements from 2nd dim.
 
-        System.out.println("Testing partition() on 2nd dimension of array: ");
+        System.out.println("\nTesting partition() on 2nd dimension of array: ");
 
         pTest = tree.partition(pointArray, 0, dList.length, 2);
 
@@ -186,7 +186,7 @@ public class KDTree280<I extends Comparable<? super I>> {
             System.out.println("9: FAIL");
         }
 
-        System.out.println("Testing partition() on higher dimension than array: ");
+        System.out.println("\nTesting partition() on higher dimension than array: ");
 
         testing = false;
         try {
