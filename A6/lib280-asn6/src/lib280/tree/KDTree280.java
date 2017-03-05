@@ -1,15 +1,31 @@
 package lib280.tree;
 
 import lib280.base.NDPoint280;
+import lib280.exception.ContainerEmpty280Exception;
 import lib280.exception.InvalidArgument280Exception;
 
-public class KDTree280 {
+public class KDTree280<I> implements SimpleTree280<I> {
+
+    protected KDNode280 rootNode;
+    protected int dimensionality;
 
     /**
-     * Construct an empty KDTree280, just for testing purposes.
+     * Construct an empty KDTree280.
      */
     public KDTree280() {
+        rootNode = null;
+        dimensionality = 0;
+    }
 
+    /**
+     * Construct a KDTree from an array of KDPoints.
+     *
+     * @param pointArray Array of KD points to build the tree from.
+     * @param k The dimensionality of the array of points.
+     */
+    public KDTree280(NDPoint280[] pointArray, int k) {
+        dimensionality = k;
+        setRootNode(buildTree(pointArray, 0, pointArray.length - 1, 0, k));
     }
 
     /**
@@ -22,8 +38,25 @@ public class KDTree280 {
      *                   a tree has depth 0 and the k dimensions of the points are numbered 0
      *                   through k-1.
      */
-    public KDTree280(NDPoint280[] pointArray, int left, int right, int depth) {
+    protected KDNode280 buildTree(NDPoint280[] pointArray, int left, int right, int depth, int k) {
+        if((right - left) < 0) {
+            return null;
+        } else {
+//      Select axis based on depth so that axis cycles through all valid values. (k is the
+//      dimensionality of the tree).
+            int d = depth % (k + 1);
+            int medianOffset = (left + right) / 2;
 
+//      put the median element in the correct position this call assumes you have added
+//      the dimension d parameter to jSmallest.
+            jSmallest(pointArray, left, right, medianOffset, d);
+
+//      Create node and construct subtrees.
+            KDNode280 node = new KDNode280(pointArray[medianOffset]);
+            node.setLeftNode(this.buildTree(pointArray, left, medianOffset - 1, depth + 1, dimensionality));
+            node.setRightNode(this.buildTree(pointArray, medianOffset + 1, right, depth + 1, dimensionality));
+            return node;
+        }
     }
 
     /**
@@ -40,11 +73,11 @@ public class KDTree280 {
      * of the elements before and after the pivot.
      */
     public int partition(NDPoint280[] list, int left, int right, int d) {
-        double pivot = list[right].idx(d - 1);
+        double pivot = list[right].idx(d);
 
         int swapOffset = left;
         for (int i = left; i < right; i++) {
-            if (list[i].idx(d - 1) <= pivot) {
+            if (list[i].idx(d) <= pivot) {
                 NDPoint280 temp = list[i];
                 list[i] = list[swapOffset];
                 list[swapOffset] = temp;
@@ -86,7 +119,7 @@ public class KDTree280 {
 //           If the position j is smaller than the pivotIndex, we know that the jth
 //           smallest element must be between left, and pivotIndex-1, so recursively
 //           look for the jth smallest element in that subarray.
-            if(j < pivotIndex) {
+            if (j < pivotIndex) {
                 jSmallest(list, left, pivotIndex - 1, j, d);
             } else {
 //           Otherwise, the position j must be larger than the pivotIndex, so the
@@ -95,6 +128,82 @@ public class KDTree280 {
             }
 //           Otherwise, the pivot ended up at list[j], and the pivot is the jth smallest
 //           element.
+        }
+    }
+
+    @Override
+    public I rootItem() throws ContainerEmpty280Exception {
+        if (isEmpty())
+            throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
+
+        return (I) rootNode.item();
+    }
+
+    /**
+     * Set root node to new node.
+     * Analysis: Time = O(1)
+     *
+     * @param newNode node to become the new root node
+     */
+    protected void setRootNode(KDNode280 newNode) {
+        rootNode = newNode;
+    }
+
+    @Override
+    public KDTree280 rootRightSubtree() throws ContainerEmpty280Exception {
+        if (isEmpty())
+            throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
+
+        KDTree280<I> result = this.clone();
+        result.clear();
+        result.setRootNode(rootNode.rightNode());
+        return result;
+    }
+
+    @Override
+    public KDTree280 rootLeftSubtree() throws ContainerEmpty280Exception {
+        if (isEmpty())
+            throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
+
+        KDTree280<I> result = this.clone();
+        result.clear();
+        result.setRootNode(rootNode.leftNode());
+        return result;
+    }
+
+
+    @Override
+    public boolean isEmpty() {
+        return this.rootNode() == null;
+    }
+
+
+    @Override
+    public boolean isFull() {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+        setRootNode(null);
+    }
+
+    protected KDNode280 rootNode() {
+        return rootNode;
+    }
+
+    /**
+     * A shallow clone of this lib280.tree.
+     * Analysis: Time = O(1)
+     */
+    @SuppressWarnings("unchecked")
+    public KDTree280<I> clone() {
+        try {
+            return (KDTree280<I>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            /*	Should not occur because Container280 extends Cloneable */
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -131,7 +240,7 @@ public class KDTree280 {
         int pTest; //store value of pivot from partition()
 
         try {
-            pTest = tree.partition(pointArray, 0, dList.length - 1, 1);
+            pTest = tree.partition(pointArray, 0, dList.length - 1, 0);
             if (pTest == 9) {
                 System.out.println("1: PASS");
             } else {
@@ -147,7 +256,7 @@ public class KDTree280 {
             System.out.println("2: FAIL");
         }
 
-        pTest = tree.partition(pointArray, 0, dList.length / 2, 1);
+        pTest = tree.partition(pointArray, 0, dList.length / 2, 0);
 
         if (pTest == 1) {
             System.out.println("3: PASS");
@@ -155,7 +264,7 @@ public class KDTree280 {
             System.out.println("3: FAIL");
         }
 
-        pTest = tree.partition(pointArray, dList.length / 2, dList.length - 1, 1);
+        pTest = tree.partition(pointArray, dList.length / 2, dList.length - 1, 0);
 
         if (pTest == 10) {
             System.out.println("4: PASS");
@@ -163,7 +272,7 @@ public class KDTree280 {
             System.out.println("4: FAIL");
         }
 
-        pTest = tree.partition(pointArray, dList.length / 2 + 2, dList.length - 1, 1);
+        pTest = tree.partition(pointArray, dList.length / 2 + 2, dList.length - 1, 0);
 
         if (pTest == 10) {
             System.out.println("5: PASS");
@@ -171,7 +280,7 @@ public class KDTree280 {
             System.out.println("5: FAIL");
         }
 
-        pTest = tree.partition(pointArray, 2, 6, 1);
+        pTest = tree.partition(pointArray, 2, 6, 0);
 
         if (pTest == 2) {
             System.out.println("6: PASS");
@@ -179,7 +288,7 @@ public class KDTree280 {
             System.out.println("6: FAIL");
         }
 
-        pTest = tree.partition(pointArray, 0, dList.length - 2, 1);
+        pTest = tree.partition(pointArray, 0, dList.length - 2, 0);
 
         if (pTest == 9) {
             System.out.println("7: PASS");
@@ -191,7 +300,7 @@ public class KDTree280 {
 
         testing = true;
         try {
-            pTest = tree.partition(pointArray, 0, dList.length - 1, 2);
+            pTest = tree.partition(pointArray, 0, dList.length - 1, 1);
         } catch (Exception e) {
             testing = false;
         }
@@ -202,7 +311,7 @@ public class KDTree280 {
             System.out.println("8: FAIL");
         }
 
-        pTest = tree.partition(pointArray, 0, dList.length - 1, 2);
+        pTest = tree.partition(pointArray, 0, dList.length - 1, 1);
 
         if (pTest == 7) {
             System.out.println("9: PASS");
@@ -210,7 +319,7 @@ public class KDTree280 {
             System.out.println("9: FAIL");
         }
 
-        pTest = tree.partition(pointArray, dList.length / 2, dList.length - 1, 2);
+        pTest = tree.partition(pointArray, dList.length / 2, dList.length - 1, 1);
 
         if (pTest == 10) {
             System.out.println("10: PASS");
@@ -218,7 +327,7 @@ public class KDTree280 {
             System.out.println("10: FAIL");
         }
 
-        pTest = tree.partition(pointArray, 3, 7, 2);
+        pTest = tree.partition(pointArray, 3, 7, 1);
 
         if (pTest == 7) {
             System.out.println("11: PASS");
@@ -226,7 +335,7 @@ public class KDTree280 {
             System.out.println("11: FAIL");
         }
 
-        pTest = tree.partition(pointArray, 0, 6, 2);
+        pTest = tree.partition(pointArray, 0, 6, 1);
 
         if (pTest == 1) {
             System.out.println("12: PASS");
@@ -234,7 +343,7 @@ public class KDTree280 {
             System.out.println("12: FAIL");
         }
 
-        pTest = tree.partition(pointArray, 0, dList.length - 2, 2);
+        pTest = tree.partition(pointArray, 0, dList.length - 2, 1);
 
         if (pTest == 9) {
             System.out.println("13: PASS");
@@ -247,7 +356,7 @@ public class KDTree280 {
 
         testing = false;
         try {
-            pTest = tree.partition(pointArray, 0, dList.length - 1, 3);
+            pTest = tree.partition(pointArray, 0, dList.length - 1, 2);
         } catch (InvalidArgument280Exception e) {
             testing = true;
         }
@@ -268,21 +377,21 @@ public class KDTree280 {
             pointArray[i] = new NDPoint280(dList[i]);
         }
 
-        tree.jSmallest(pointArray, 0, dList.length - 1, dList.length / 2, 1);
+        tree.jSmallest(pointArray, 0, dList.length - 1, dList.length / 2, 0);
         if (pointArray[pointArray.length / 2].idx(0) == 8) {
             System.out.println("15: PASS");
         } else {
             System.out.println("15: FAIL");
         }
 
-        tree.jSmallest(pointArray, 0, 3, 2, 1);
+        tree.jSmallest(pointArray, 0, 3, 2, 0);
         if (pointArray[2].idx(0) == 4) {
             System.out.println("16: PASS");
         } else {
             System.out.println("16: FAIL");
         }
 
-        tree.jSmallest(pointArray, 6, dList.length-1, 7, 1);
+        tree.jSmallest(pointArray, 6, dList.length - 1, 7, 0);
         if (pointArray[7].idx(0) == 11) {
             System.out.println("17: PASS");
         } else {
@@ -291,20 +400,38 @@ public class KDTree280 {
 
         System.out.println("\nTesting jSmallest() on 2nd dimension.");
 
-        tree.jSmallest(pointArray, 0, dList.length-1, dList.length/2, 2);
-        if(pointArray[dList.length/2].idx(1) == 7) {
+        tree.jSmallest(pointArray, 0, dList.length - 1, dList.length / 2, 1);
+        if (pointArray[dList.length / 2].idx(1) == 7) {
             System.out.println("18: PASS");
         } else {
             System.out.println("18: FAIL");
         }
 
-        tree.jSmallest(pointArray, dList.length/2, dList.length - 1, 8, 2);
-        if(pointArray[8].idx(1) == 15) {
+        tree.jSmallest(pointArray, dList.length / 2, dList.length - 1, 8, 1);
+        if (pointArray[8].idx(1) == 15) {
             System.out.println("19: PASS");
         } else {
             System.out.println("19: FAIL");
         }
 
-        
+//      Testing the building of the actual tree now.
+//      Rebuilding the original tree.
+        dList = new double[][]{
+                {5.0, 2.0},
+                {9.0, 10.0},
+                {11.0, 1.0},
+                {4.0, 3.0},
+                {2.0, 12.0},
+                {3.0, 7.0},
+                {1.0, 5.0}
+        };
+
+        pointArray = new NDPoint280[dList.length];
+        for (int i = 0; i < dList.length; i++) {
+            pointArray[i] = new NDPoint280(dList[i]);
+        }
+
+        tree = new KDTree280(pointArray, 1);
+
     }
 }
