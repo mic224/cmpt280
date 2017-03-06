@@ -1,10 +1,11 @@
 package lib280.tree;
 
+import lib280.base.Container280;
 import lib280.base.NDPoint280;
 import lib280.exception.ContainerEmpty280Exception;
 import lib280.exception.InvalidArgument280Exception;
 
-public class KDTree280<I> implements SimpleTree280<I> {
+public class KDTree280 implements Container280 {
 
     protected KDNode280 rootNode;
     protected int dimensionality;
@@ -21,10 +22,12 @@ public class KDTree280<I> implements SimpleTree280<I> {
      * Construct a KDTree from an array of KDPoints.
      *
      * @param pointArray Array of KD points to build the tree from.
-     * @param k The dimensionality of the array of points.
+     * @param k          The dimensionality of the array of points.
      */
     public KDTree280(NDPoint280[] pointArray, int k) {
+        //store the dimensionality of the tree.
         dimensionality = k;
+        //start the recursion
         setRootNode(buildTree(pointArray, 0, pointArray.length - 1, 0, k));
     }
 
@@ -39,7 +42,7 @@ public class KDTree280<I> implements SimpleTree280<I> {
      *                   through k-1.
      */
     protected KDNode280 buildTree(NDPoint280[] pointArray, int left, int right, int depth, int k) {
-        if((right - left) < 0) {
+        if ((right - left) < 0) {
             return null;
         } else {
 //      Select axis based on depth so that axis cycles through all valid values. (k is the
@@ -73,6 +76,7 @@ public class KDTree280<I> implements SimpleTree280<I> {
      * of the elements before and after the pivot.
      */
     public int partition(NDPoint280[] list, int left, int right, int d) {
+        //store the item in the right position as the pivot
         double pivot = list[right].idx(d);
 
         int swapOffset = left;
@@ -131,12 +135,94 @@ public class KDTree280<I> implements SimpleTree280<I> {
         }
     }
 
-    @Override
-    public I rootItem() throws ContainerEmpty280Exception {
+    public NDPoint280[] searchRange(KDTree280 T, NDPoint280 p1, NDPoint280 p2, int depth) {
+        if(T.isEmpty()) {
+            return new NDPoint280[0];
+        }
+
+        int d = depth % (dimensionality + 1);
+        double splitValue = T.rootItem().idx(d);
+        double min = p1.idx(d);
+        double max = p2.idx(d);
+
+        if(splitValue < min) {
+            return searchRange(T.rootRightSubtree(), p1, p2, depth + 1);
+        } else if(splitValue > max) {
+            return searchRange(T.rootLeftSubtree(), p1, p2, depth + 1);
+        } else {
+            NDPoint280[] L = searchRange(T.rootLeftSubtree(), p1, p2, depth + 1);
+            NDPoint280[] R = searchRange(T.rootRightSubtree(), p1, p2, depth + 1);
+
+            boolean test = false;
+            for(int i = 0; i < dimensionality; i++) {
+                if( (T.rootItem().idx(i) >= p1.idx(i)) && (T.rootItem().idx(i) <= p2.idx(i)) ) {
+                    test = true;
+                } else {
+                    test = false;
+                    break;
+                }
+            }
+
+            if(test) {
+                NDPoint280[] tempNode = new NDPoint280[L.length + R.length + 1];
+                for(int i = 0; i < L.length; i++) {
+                    tempNode[i] = L[i];
+                }
+                for(int i = 0; i < R.length; i++) {
+                    tempNode[L.length + i] = R[i];
+                }
+                tempNode[tempNode.length-1] = T.rootItem();
+                return tempNode;
+            } else {
+                NDPoint280[] tempNode = new NDPoint280[L.length + R.length];
+                for(int i = 0; i < L.length; i++) {
+                    tempNode[i] = L[i];
+                }
+                for(int i = 0; i < R.length; i++) {
+                    tempNode[L.length + i] = R[i];
+                }
+                return tempNode;
+            }
+        }
+    }
+
+    public NDPoint280 rootItem() throws ContainerEmpty280Exception {
         if (isEmpty())
             throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
 
-        return (I) rootNode.item();
+        return rootNode.item();
+    }
+
+    /**
+     * Left subtree of the root.
+     * Analysis: Time = O(1)
+     *
+     * @precond !isEmpty()
+     */
+    public KDTree280 rootLeftSubtree() throws ContainerEmpty280Exception {
+        if (isEmpty())
+            throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
+
+        KDTree280 result = this.clone();
+        result.clear();
+        result.setRootNode(rootNode.leftNode());
+        return result;
+    }
+
+    /**
+     * Right subtree of the root.
+     * Analysis: Time = O(1)
+     *
+     * @precond !isEmpty()
+     */
+    public KDTree280 rootRightSubtree() throws ContainerEmpty280Exception {
+        if (isEmpty())
+            throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
+
+        KDTree280 result = this.clone();
+        result.clear();
+        result.setRootNode(rootNode.rightNode());
+        return result;
     }
 
     /**
@@ -148,29 +234,6 @@ public class KDTree280<I> implements SimpleTree280<I> {
     protected void setRootNode(KDNode280 newNode) {
         rootNode = newNode;
     }
-
-    @Override
-    public KDTree280 rootRightSubtree() throws ContainerEmpty280Exception {
-        if (isEmpty())
-            throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
-
-        KDTree280<I> result = this.clone();
-        result.clear();
-        result.setRootNode(rootNode.rightNode());
-        return result;
-    }
-
-    @Override
-    public KDTree280 rootLeftSubtree() throws ContainerEmpty280Exception {
-        if (isEmpty())
-            throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
-
-        KDTree280<I> result = this.clone();
-        result.clear();
-        result.setRootNode(rootNode.leftNode());
-        return result;
-    }
-
 
     @Override
     public boolean isEmpty() {
@@ -197,15 +260,45 @@ public class KDTree280<I> implements SimpleTree280<I> {
      * Analysis: Time = O(1)
      */
     @SuppressWarnings("unchecked")
-    public KDTree280<I> clone() {
+    public KDTree280 clone() {
         try {
-            return (KDTree280<I>) super.clone();
+            return (KDTree280) super.clone();
         } catch (CloneNotSupportedException e) {
             /*	Should not occur because Container280 extends Cloneable */
             e.printStackTrace();
             return null;
         }
     }
+
+
+    protected String toStringByLevel(int i) {
+        StringBuffer blanks = new StringBuffer((i - 1) * 5);
+        for (int j = 0; j < i - 1; j++)
+            blanks.append("     ");
+
+        String result = new String();
+        if (!isEmpty() && (rootNode.leftNode != null || rootNode.rightNode != null))
+            result += rootRightSubtree().toStringByLevel(i + 1);
+
+        result += "\n" + blanks + i + ": ";
+        if (isEmpty())
+            result += "-";
+        else {
+            result += rootItem();
+            if (rootNode.leftNode != null || rootNode.rightNode != null)
+                result += rootLeftSubtree().toStringByLevel(i + 1);
+        }
+        return result;
+    }
+
+    /**
+     * String representation of the lib280.tree, level by level. <br>
+     * Analysis: Time = O(n), where n = number of items in the lib280.tree
+     */
+    public String toStringByLevel() {
+        return toStringByLevel(1);
+    }
+
 
     public static void main(String[] args) {
 
@@ -423,7 +516,8 @@ public class KDTree280<I> implements SimpleTree280<I> {
                 {4.0, 3.0},
                 {2.0, 12.0},
                 {3.0, 7.0},
-                {1.0, 5.0}
+                {1.0, 5.0},
+                {23, 4.0}
         };
 
         pointArray = new NDPoint280[dList.length];
@@ -431,7 +525,75 @@ public class KDTree280<I> implements SimpleTree280<I> {
             pointArray[i] = new NDPoint280(dList[i]);
         }
 
+        //building a string to display the input array
+        System.out.println("\nTesting the list of points from the example: ");
+        String testString = new String();
+        for (int i = 0; i < pointArray.length; i++) {
+            testString += "(";
+            testString += pointArray[i].idx(0) + " ," + pointArray[i].idx(1);
+            testString += ")\n";
+        }
+        System.out.println(testString);
+        System.out.println("The Tree from this list of points: ");
         tree = new KDTree280(pointArray, 1);
+        System.out.println(tree.toStringByLevel());
 
+        //building an array for 3d points
+        dList = new double[][]{
+                {1.0, 12.0, 1.0, 41.0},
+                {18.0, 1.0, 2.0, 82.0},
+                {2.0, 14.0, 16.0, 24.0},
+                {7.0, 3.0, 3.0, 94.0},
+                {3.0, 7.0, 5.0, 103.0},
+                {16.0, 4.0, 4.0, 0.0},
+                {4.0, 6.0, 1.0, 13.0},
+                {5.0, 5.0, 17.0, 3.0},
+                {8.0, 2.0, 20.0, 12.0}
+        };
+
+         pointArray = new NDPoint280[dList.length];
+        for (int i = 0; i < dList.length; i++) {
+            pointArray[i] = new NDPoint280(dList[i]);
+        }
+
+        //building a string to display the input array
+        testString = new String();
+        for (int i = 0; i < pointArray.length; i++) {
+            testString += "(";
+            testString += pointArray[i].idx(0) + " ," + pointArray[i].idx(1) + " ," + pointArray[i].idx(2)
+                            + " ," + pointArray[i].idx(3);
+            testString += ")\n";
+        }
+
+        System.out.println("\nTesting 4d points.\n" + testString);
+
+        System.out.println("The Tree from this list of points: ");
+        tree = new KDTree280(pointArray, 4);
+        System.out.println(tree.toStringByLevel());
+
+        //3,4,0,2
+        //6,7,20,15
+        // upper range for the range search
+        double[] d1 = new double[] {3.0, 4.0, 0.0, 2.0};
+        NDPoint280 p1 = new NDPoint280(d1);
+
+        // upper range for the range search
+        double[] d2 = new double[] {6.0, 7.0, 20.0, 15.0};
+        NDPoint280 p2 = new NDPoint280(d2);
+
+        // store the output of the range search.
+        NDPoint280[] searchOut;
+
+        System.out.println("\nTesting a range search: lower(3,4,0,2) upper(6,7,20,15): ");
+        searchOut = tree.searchRange(tree, p1, p2, 0);
+
+        testString = new String();
+        for (int i = 0; i < searchOut.length; i++) {
+            testString += "(";
+            testString += searchOut[i].idx(0) + " ," + searchOut[i].idx(1) + " ," + searchOut[i].idx(2)
+                    + " ," + searchOut[i].idx(3);
+            testString += ")\n";
+        }
+        System.out.println("Searching..\nItems in range: \n" + testString);
     }
 }
