@@ -124,6 +124,13 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			// immediately to the right of the node 'oldLeaf'.
 			
 			// TODO Link newLeaf to its proper successor/predecessor nodes and
+			newLeaf.next = oldLeaf.next;
+			oldLeaf.next = newLeaf;
+			newLeaf.prev = oldLeaf;
+
+			if(newLeaf.data.key().compareTo(largest.data.key()) > 0) {
+				largest = newLeaf;
+			}
 			// adjust links of successor/predecessor nodes accordingly.
 			
 			// Also adjust this.largest if necessary.
@@ -279,8 +286,9 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 
 				// TODO Unlink leaf from it's linear successor/predecessor
 				// Hint: Be prepared to typecast where appropriate.
-
-				
+				LinkedLeafTwoThreeNode280<K,I> tempLeft = (LinkedLeafTwoThreeNode280<K,I>)root.getLeftSubtree();
+				tempLeft.prev = null;
+				tempLeft.next = null;
 				
 				
 				// Proceed with deletion of leaf from the 2-3 tree.
@@ -298,7 +306,9 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 
 				// TODO Unlink leaf from it's linear successor/predecessor
 				// Hint: Be prepared to typecast where appropriate.
-		
+				LinkedLeafTwoThreeNode280<K,I> tempMid = (LinkedLeafTwoThreeNode280<K,I>)root.getMiddleSubtree();
+				tempMid.prev = null;
+				tempMid.next = null;
 				
 				
 				
@@ -319,7 +329,9 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 
 				// TODO Unlink leaf from it's linear successor/predecessor
 				// Hint: Be prepared to typecast where appropriate.
-
+				LinkedLeafTwoThreeNode280<K,I> tempRight = (LinkedLeafTwoThreeNode280<K,I>)root.getLeftSubtree();
+				tempRight.prev = null;
+				tempRight.next = null;
 				
 				
 				
@@ -338,9 +350,11 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	public K itemKey() throws NoCurrentItem280Exception {
 		// TODO Return the key of the item in the node
 		// on which the cursor is positioned.
-		
-		// This is just a placeholder to avoid compile errors. Remove it when ready.
-		return null;  
+		if(this.itemExists()) {
+			return this.cursor.data.key();
+		} else {
+			throw new NoCurrentItem280Exception("Error: There is no current item.");
+		}
 	}
 
 
@@ -359,9 +373,11 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	public I item() throws NoCurrentItem280Exception {
 		// TODO Return the item in the node at which the cursor is
 		// positioned.
-
-		// This is just a placeholder to avoid compile errors. Remove it when ready.
-		return null;  
+		if(this.itemExists()) {
+			return this.cursor.data;
+		} else {
+			throw new NoCurrentItem280Exception("Error: There is no current item.");
+		}
 	}
 
 
@@ -554,13 +570,37 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 				new IterableTwoThreeTree280<String, Loot>();
 
 		// An example of instantiating an item. (you can remove this if you wish)
-		Loot sampleItem = new Loot("Magic Armor", 1000);
+		Loot mace1 = new Loot("+1 Mace", 2000);
 
 		// Insert your first item! (you can remove this if you wish)
-		T.insert(sampleItem);
+		T.insert(mace1);
 
-		// TODO Write your regression test here
-	
+		Loot BIS = new Loot("Blue Ioun Stone", 20000);
+		T.insert(BIS);
+
+		Loot LArmor = new Loot("Leather Armor", 10);
+		T.insert(LArmor);
+
+		Loot PArmor = new Loot("Plate Armor", 350);
+		T.insert(PArmor);
+
+		Loot PofHealing = new Loot("Potion of Healing", 100);
+		T.insert(PofHealing);
+
+		Loot VBlade = new Loot("Vampiric Blade", 12000);
+		T.insert(VBlade);
+
+		Loot HHalberd = new Loot("Hideous Halberd", 600);
+		T.insert(HHalberd);
+
+		Loot SofBane = new Loot("Scroll of Bane", 250);
+		T.insert(SofBane);
+
+		Loot Bag = new Loot("Bag of Holding", 1500);
+		T.insert(Bag);
+
+		System.out.println("Tree: \n" + T.toString());
+
 	}
 
 
