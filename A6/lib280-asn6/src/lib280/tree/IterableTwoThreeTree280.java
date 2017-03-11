@@ -1,3 +1,12 @@
+// Assignment #6
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
 package lib280.tree;
 
 import lib280.base.CursorPosition280;
@@ -15,20 +24,20 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 
 	// References to the leaf nodes with the smallest and largest keys.
 	LinkedLeafTwoThreeNode280<K,I> smallest, largest;
-	
+
 	// These next two variables represent the cursor which
 	// the methods inherited from KeyedLinearIterator280 will
 	// manipulate.  The cursor may only be positioned at leaf
 	// nodes, never at internal nodes.
-	
+
 	// Reference to the leaf node at which the cursor is positioned.
 	LinkedLeafTwoThreeNode280<K,I> cursor;
-	
-	// Reference to the predecessor of the node referred to by 'cursor' 
+
+	// Reference to the predecessor of the node referred to by 'cursor'
 	// (or null if no such node exists).
 	LinkedLeafTwoThreeNode280<K,I> prev;
-	
-	
+
+
 	protected LinkedLeafTwoThreeNode280<K,I> createNewLeafNode(I newItem) {
 		return new LinkedLeafTwoThreeNode280<K,I>(newItem);
 	}
@@ -37,10 +46,10 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	@Override
 	public void insert(I newItem) {
 
-		if( this.has(newItem.key()) ) 
+		if( this.has(newItem.key()) )
 			throw new DuplicateItems280Exception("Key already exists in the tree.");
 
-		// If the tree is empty, just make a leaf node. 
+		// If the tree is empty, just make a leaf node.
 		if( this.isEmpty() ) {
 			this.rootNode = createNewLeafNode(newItem);
 			// Set the smallest and largest nodes to be the one leaf node in the tree.
@@ -55,20 +64,20 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			InternalTwoThreeNode280<K,I> newRoot;
 			if( newItem.key().compareTo(oldRoot.getKey1()) < 0) {
 				// New item's key is smaller than the existing item's key...
-				newRoot = createNewInternalNode(newLeaf, oldRoot.getKey1(), oldRoot, null, null);	
+				newRoot = createNewInternalNode(newLeaf, oldRoot.getKey1(), oldRoot, null, null);
 				newLeaf.setNext(oldRoot);
 				oldRoot.setPrev(newLeaf);
-				
+
 				// There was one leaf node, now there's two.  Update smallest and largest nodes.
 				this.smallest = newLeaf;
 				this.largest = oldRoot;
 			}
 			else {
-				// New item's key is larger than the existing item's key. 
+				// New item's key is larger than the existing item's key.
 				newRoot = createNewInternalNode(oldRoot, newItem.key(), newLeaf, null, null);
 				oldRoot.setNext(newLeaf);
 				newLeaf.setPrev(oldRoot);
-				
+
 				// There was one leaf node, now there's two.  Update smallest and largest nodes.
 				this.smallest = oldRoot;
 				this.largest = newLeaf;
@@ -84,7 +93,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 				InternalTwoThreeNode280<K,I> oldRoot = (InternalTwoThreeNode280<K,I>)rootNode;
 
 				// extra always contains larger keys than its sibling.
-				this.rootNode = createNewInternalNode(oldRoot, extra.secondItem(), extra.firstItem(), null, null);				
+				this.rootNode = createNewInternalNode(oldRoot, extra.secondItem(), extra.firstItem(), null, null);
 			}
 		}
 	}
@@ -95,7 +104,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	 * @param root Root of the (sub)tree into which we are inserting.
 	 * @param newItem The item to be inserted.
 	 */
-	protected Pair280<TwoThreeNode280<K,I>, K> insert( TwoThreeNode280<K,I> root, 
+	protected Pair280<TwoThreeNode280<K,I>, K> insert( TwoThreeNode280<K,I> root,
 			I newItem) {
 
 		if( !root.isInternal() ) {
@@ -117,12 +126,12 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 				// and return it.
 				extraNode = new Pair280<TwoThreeNode280<K,I>, K>(createNewLeafNode(newItem), newItem.key());
 			}
-			
+
 			LinkedLeafTwoThreeNode280<K,I> newLeaf= (LinkedLeafTwoThreeNode280<K, I>) extraNode.firstItem();
-		
-			// No matter what happens above, the node 'newLeaf' is a new leaf node that is 
+
+			// No matter what happens above, the node 'newLeaf' is a new leaf node that is
 			// immediately to the right of the node 'oldLeaf'.
-			
+
 			// TODO Link newLeaf to its proper successor/predecessor nodes and
 			newLeaf.next = oldLeaf.next;
 			oldLeaf.next = newLeaf;
@@ -132,18 +141,18 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 				largest = newLeaf;
 			}
 			// adjust links of successor/predecessor nodes accordingly.
-			
+
 			// Also adjust this.largest if necessary.
-			
+
 			// (this.smallest will never need adjustment because if a new
-			//  smallest element is inserted, it gets put in the existing 
-			//  leaf node, and the old smallest element is copied to a  
+			//  smallest element is inserted, it gets put in the existing
+			//  leaf node, and the old smallest element is copied to a
 			//  new node -- this is "true" case for the previous if/else.)
-			
-		
+
+
 			return extraNode;
 		}
-		else { // Otherwise, recurse! 
+		else { // Otherwise, recurse!
 			Pair280<TwoThreeNode280<K,I>, K> extra;
 			TwoThreeNode280<K,I> insertSubtree;
 
@@ -166,9 +175,9 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			// If recursion resulted in a new node needs to be linked in as a child
 			// of root ...
 			if( extra != null ) {
-				// Otherwise, extra.firstItem() is an internal node... 
+				// Otherwise, extra.firstItem() is an internal node...
 				if( !root.isRightChild() ) {
-					// if root has only two children.  
+					// if root has only two children.
 					if( insertSubtree == root.getLeftSubtree() ) {
 						// if we inserted in the left subtree...
 						root.setRightSubtree(root.getMiddleSubtree());
@@ -215,7 +224,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			}
 			// Otherwise no new node was returned, so there is nothing extra to link in.
 			else return null;
-		}		
+		}
 	}
 
 
@@ -231,7 +240,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			}
 		}
 		else {
-			delete(this.rootNode, keyToDelete);	
+			delete(this.rootNode, keyToDelete);
 			// If the root only has one child, replace the root with its
 			// child.
 			if( this.rootNode.getMiddleSubtree() == null) {
@@ -271,7 +280,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 
 			// Do the first possible of:
 			// steal left, steal right, merge left, merge right
-			if( deletionSubtree.getMiddleSubtree() == null)  
+			if( deletionSubtree.getMiddleSubtree() == null)
 				if(!stealLeft(root, deletionSubtree))
 					if(!stealRight(root, deletionSubtree))
 						if(!giveLeft(root, deletionSubtree))
@@ -289,17 +298,17 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 				LinkedLeafTwoThreeNode280<K,I> tempLeft = (LinkedLeafTwoThreeNode280<K,I>)root.getLeftSubtree();
 				tempLeft.prev = null;
 				tempLeft.next = null;
-				
-				
+
+
 				// Proceed with deletion of leaf from the 2-3 tree.
 				root.setLeftSubtree(root.getMiddleSubtree());
 				root.setMiddleSubtree(root.getRightSubtree());
 				if(root.getMiddleSubtree() == null)
 					root.setKey1(null);
-				else 
+				else
 					root.setKey1(root.getKey2());
 				if( root.getRightSubtree() != null) root.setKey2(null);
-				root.setRightSubtree(null);					
+				root.setRightSubtree(null);
 			}
 			else if( root.getMiddleSubtree().getKey1().compareTo(keyToDelete) == 0 ) {
 				// leaf to delete is in middle
@@ -309,14 +318,14 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 				LinkedLeafTwoThreeNode280<K,I> tempMid = (LinkedLeafTwoThreeNode280<K,I>)root.getMiddleSubtree();
 				tempMid.prev = null;
 				tempMid.next = null;
-				
-				
-				
+
+
+
 				// Proceed with deletion from the 2-3 tree.
-				root.setMiddleSubtree(root.getRightSubtree());				
+				root.setMiddleSubtree(root.getRightSubtree());
 				if(root.getMiddleSubtree() == null)
 					root.setKey1(null);
-				else 
+				else
 					root.setKey1(root.getKey2());
 
 				if( root.getRightSubtree() != null) {
@@ -332,9 +341,9 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 				LinkedLeafTwoThreeNode280<K,I> tempRight = (LinkedLeafTwoThreeNode280<K,I>)root.getLeftSubtree();
 				tempRight.prev = null;
 				tempRight.next = null;
-				
-				
-				
+
+
+
 				// Proceed with deletion of the node from the 2-3 tree.
 				root.setKey2(null);
 				root.setRightSubtree(null);
@@ -342,10 +351,10 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			else {
 				// key to delete does not exist in tree.
 			}
-		}		
-	}	
-	
-	
+		}
+	}
+
+
 	@Override
 	public K itemKey() throws NoCurrentItem280Exception {
 		// TODO Return the key of the item in the node
@@ -363,7 +372,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 		// Return a pair consisting of the key of the item
 		// at which the cursor is positioned, and the entire
 		// item in the node at which the cursor is positioned.
-		if( !itemExists() ) 
+		if( !itemExists() )
 			throw new NoCurrentItem280Exception("There is no current item from which to obtain its key.");
 		return new Pair280<K, I>(this.itemKey(), this.item());
 	}
@@ -442,7 +451,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	public void goPosition(CursorPosition280 c) {
 		if(c instanceof TwoThreeTreePosition280 ) {
 			this.cursor = ((TwoThreeTreePosition280<K,I>) c).cursor;
-			this.prev = ((TwoThreeTreePosition280<K,I>) c).prev;		
+			this.prev = ((TwoThreeTreePosition280<K,I>) c).prev;
 		}
 		else {
 			throw new InvalidArgument280Exception("The provided position was not a TwoThreeTreePosition280 object.");
@@ -453,14 +462,20 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	public void search(K k) {
 		// TODO Position the cursor at the item with key k
 		// (if such an item exists).
-		
-		// Don't use the cursor for this so the search 
+
+		// Don't use the cursor for this so the search
 		// can be sub-linear time. Use the inherited protected
 		// find() method to locate the node containing k if
-		// it exists, then adjust the cursor variables to 
+		// it exists, then adjust the cursor variables to
 		// refer to it.  If no item with key k can be found
 		// leave the cursor in the after position.
-		
+
+
+		if(find(k) != null) {
+
+		} else {
+			goAfter();
+		}
 
 	}
 
@@ -469,17 +484,17 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	public void searchCeilingOf(K k) {
 		// Position the cursor at the smallest item that
 		// has key at least as large as 'k', if such an
-		// item exists.  If no such item exists, leave 
+		// item exists.  If no such item exists, leave
 		// the cursor in the after position.
-		
+
 		// This one is easier to do with a linear search.
 		// Could make it potentially faster but the solution is
 		// not obvious -- just use linear search via the cursor.
-		
+
 		// If it's empty, do nothing; itemExists() will be false.
-		if( this.isEmpty() ) 
+		if( this.isEmpty() )
 			return;
-		
+
 		// Find first item item >= k.  If there is no such item,
 		// cursor will end up in after position, and that's fine
 		// since itemExists() will be false.
@@ -487,17 +502,21 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 		while(this.itemExists() && this.itemKey().compareTo(k) < 0) {
 			this.goForth();
 		}
-		
+
 	}
 
 	@Override
 	public void setItem(I x) throws NoCurrentItem280Exception,
 			InvalidArgument280Exception {
 		// TODO Store the item x in the node at which the cursor is
-		// positioned.  If the item at which the cursor is 
+		// positioned.  If the item at which the cursor is
 		// positioned does not have the same key as x, throw
 		// an appropriate exception.
-
+		if(cursor.data.key() == x.key()) {
+			cursor.setData(x);
+		} else {
+			throw new NoCurrentItem280Exception("ERROR: No Current Item.");
+		}
 	}
 
 
@@ -505,18 +524,23 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	public void deleteItem() throws NoCurrentItem280Exception {
 		// TODO Remove the item at which the cursor is positioned from the tree.
 		// Leave the cursor on the successor of the deleted item.
-	
+
 		// Hint: If this takes more than 5 or 6 lines, you're doing it wrong!
+		if(cursor != null) {
+			cursor.data = null;
+		} else {
+			throw new NoCurrentItem280Exception("ERROR: No Current Item.");
+		}
 	}
 
 
-	
-	
-	
+
+
+
     @Override
     public String toStringByLevel() {
         String s = super.toStringByLevel();
-        
+
         s += "\nThe Linear Ordering is: ";
         CursorPosition280 savedPos = this.currentPosition();
         this.goFirst();
@@ -525,7 +549,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
             this.goForth();
         }
         this.goPosition(savedPos);
-        
+
         if( smallest != null)
             s += "\nSmallest: " + this.smallest.getKey1();
         if( largest != null ) {
@@ -541,7 +565,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 		// as required by the class header of the 2-3 tree.
 		// Keyed280 just requires that the item have a method
 		// called key() that returns its key.
-		
+
 		// You must test your tree using Loot objects.
 
 		class Loot implements Keyed280<String>{
@@ -552,7 +576,7 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			public String key() {
 				return key;
 			}
-			
+
 			@SuppressWarnings("unused")
 			public int itemValue() {
 				return this.goldValue;
@@ -564,9 +588,9 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 			}
 
 		}
-		
-		// Create a tree to test with. 
-		IterableTwoThreeTree280<String, Loot> T = 
+
+		// Create a tree to test with.
+		IterableTwoThreeTree280<String, Loot> T =
 				new IterableTwoThreeTree280<String, Loot>();
 
 		// An example of instantiating an item. (you can remove this if you wish)
@@ -604,5 +628,4 @@ public class IterableTwoThreeTree280<K extends Comparable<? super K>, I extends 
 	}
 
 
-	
 }

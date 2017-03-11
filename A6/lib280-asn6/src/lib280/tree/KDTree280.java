@@ -1,3 +1,12 @@
+// Assignment #6
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
 package lib280.tree;
 
 import lib280.base.Container280;
@@ -135,6 +144,17 @@ public class KDTree280 implements Container280 {
         }
     }
 
+    /**
+     * Search the tree for values that fall between 2 n dimensional points.
+     *
+     * @param T     The tree in which to search for items.
+     * @param p1    The lower bounds of the search range( n dimensions).
+     * @param p2    The upper bounds of the search range( n dimensions).
+     * @param depth the current depth of the tree.
+     * @Precondition T is not empty.
+     * @Postcondition The elements that are between p1 and p2 are returned
+     * in the form of an n dimensional point array.
+     */
     public NDPoint280[] searchRange(KDTree280 T, NDPoint280 p1, NDPoint280 p2, int depth) {
         if(T.isEmpty()) {
             return new NDPoint280[0];
@@ -186,6 +206,11 @@ public class KDTree280 implements Container280 {
         }
     }
 
+    /**
+     * Get the item at the root of the tree.
+     *
+     * @precond !isEmpty()
+     */
     public NDPoint280 rootItem() throws ContainerEmpty280Exception {
         if (isEmpty())
             throw new ContainerEmpty280Exception("Cannot return a subtree of an empty lib280.tree.");
