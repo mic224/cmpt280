@@ -1,12 +1,23 @@
- package lib280.graph;
+// Assignment #7
+//
+//		Class:				CMPT 280
+//		Name:				Michael Coquet
+//		NSID:				mic224
+//		Student #:			11164232
+//		Lecture Section:	02
+//		Tutorial Section:	T04
+
+package lib280.graph;
 
 //import java.io.File;
 //import java.io.IOException;
 //import java.util.Scanner;
 
+ import lib280.base.LinearIterator280;
  import lib280.base.Pair280;
  import lib280.exception.InvalidArgument280Exception;
 
+ import java.util.Arrays;
  import java.util.InputMismatchException;
  import java.util.Scanner;
 
@@ -23,22 +34,22 @@
          super(cap, d);
      }
 
-     /**
-      * Replaces the current graph with a graph read from a data file.
-      *
-      * File format is a sequence of integers. The first integer is the total
-      * number of nodes which will be numbered between 1 and n.
-      *
-      * Remaining integers are treated as ordered pairs of (source, destination)
-      * indicies defining graph edges.
-      *
-      * @param fileName
-      *            Name of the file from which to read the graph.
-      * @precond The weights on the edges in the data file fileName are non negative.
-      * @throws RuntimeException
-      *             if the file format is incorrect, or an edge appears more than
-      *             once in the input.
-      */
+//     /**
+//      * Replaces the current graph with a graph read from a data file.
+//      *
+//      * File format is a sequence of integers. The first integer is the total
+//      * number of nodes which will be numbered between 1 and n.
+//      *
+//      * Remaining integers are treated as ordered pairs of (source, destination)
+//      * indicies defining graph edges.
+//      *
+//      * @param      Filename
+//      *            Name of the file from which to read the graph.
+//      * @precond The weights on the edges in the data file fileName are non negative.
+//      * @throws RuntimeException
+//      *             if the file format is incorrect, or an edge appears more than
+//      *             once in the input.
+//      */
 
 
      @Override
@@ -70,19 +81,74 @@
       *         at 1.
       */
      public Pair280<double[], int[]> shortestPathDijkstra(int startVertex) {
-         // TODO Implement this method
 
-         // Remove this return statement when you're ready -- it's a placeholder to prevent a compiler error.
-         return new Pair280<double[], int[]>(null, null);
+         double tentativeDistance[] = new double[numVertices+1];
+         boolean visited[] = new boolean[numVertices+1];
+         int predecessorNode[] = new int[numVertices+1];
+
+         for(int i = 0; i < numVertices+1; i++) {
+             tentativeDistance[i] = Double.POSITIVE_INFINITY;
+             visited[i] = false;
+         }
+
+         tentativeDistance[startVertex] = 0;
+         boolean containsFalse = true;
+         while(containsFalse) {
+             double smallestDistance = Double.POSITIVE_INFINITY;
+             int smallestIndex = 1;
+
+             containsFalse = false;
+             for(int i = 1; i < visited.length; i++) {
+                 if(visited[i] == false) {
+                     containsFalse = true;
+                     if(tentativeDistance[i] <= smallestDistance) {
+                         smallestDistance = tentativeDistance[i];
+                         smallestIndex = i;
+                     }
+                 }
+             }
+             Vertex280 cur = this.vertex(smallestIndex);
+             visited[smallestIndex] = true;
+
+             LinearIterator280 iterator = adjLists[smallestIndex].iterator();
+             iterator.goFirst();
+
+             while(!iterator.after()) {
+                 WeightedEdge280 curEdge = (WeightedEdge280)iterator.item();
+                 int z = curEdge.other(cur).index;
+                 if( (!visited[z]) &&
+                         (tentativeDistance[z] > (tentativeDistance[cur.index] + getEdgeWeight(cur.index, z)))  ) {
+                     tentativeDistance[z] = tentativeDistance[cur.index] + getEdgeWeight(cur.index, z);
+                     predecessorNode[z] = cur.index;
+                 }
+                 iterator.goForth();
+             }
+
+         }
+
+         return new Pair280<double[], int[]>(tentativeDistance, predecessorNode);
 
      }
 
      // Given a predecessors array output from this.shortestPathDijkatra, return a string
      // that represents a path from the start node to the given destination vertex 'destVertex'.
      private static String extractPath(int[] predecessors, int destVertex) {
-         // TODO Implement this method
+         String path = new String();
+         int index = destVertex;
 
-         return "";  // Remove this when you're ready -- this is a placeholder to prevent a compiler error.
+         if(predecessors[destVertex] != 0) {
+             path += destVertex;
+             while (predecessors[index] != 0) {
+                 path = predecessors[index] + ", " + path;
+                 index = predecessors[index];
+             }
+
+             path = "The path to " + destVertex + " is: " + path;
+
+             return path;  // Remove this when you're ready -- this is a placeholder to prevent a compiler error.
+         } else {
+             return "Not reachable.";
+         }
      }
 
      // Regression Test
@@ -90,7 +156,7 @@
          NonNegativeWeightedGraphAdjListRep280<Vertex280> G = new NonNegativeWeightedGraphAdjListRep280<Vertex280>(1, false);
 
          if( args.length == 0)
-             G.initGraphFromFile("lib280-asn7/src/lib280/graph/weightedtestgraph.gra");
+             G.initGraphFromFile("weightedtestgraph.gra");
          	 // If you're using Eclipse and you get an error opening the file, comment
          	 // the line above, and uncomment the line below:
          	 // G.initGraphFromFile("src/lib280/graph/weightedtestgraph.gra");

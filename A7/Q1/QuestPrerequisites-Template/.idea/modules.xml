@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/QuestPrerequisites-Template/QuestPrerequisites-Template.iml" filepath="$PROJECT_DIR$/QuestPrerequisites-Template/QuestPrerequisites-Template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/QuestPrerequisites-Template.iml" filepath="$PROJECT_DIR$/QuestPrerequisites-Template.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../lib280-asn7/lib280-asn7.iml" filepath="$PROJECT_DIR$/../../lib280-asn7/lib280-asn7.iml" />
     </modules>
   </component>
